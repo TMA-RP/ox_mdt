@@ -179,13 +179,25 @@ export const theme: MantineThemeOverride = {
       },
       styles: (theme) => ({
         overlay: {
-          borderRadius: theme.radius.md,
         },
         header: {
           backgroundColor: theme.colors.durple[6],
         },
         body: {
           backgroundColor: theme.colors.durple[6],
+          overflow: "hidden",
+          '&::after': {
+            content: '""',
+            width: "100%",
+            height: "200%",
+            background: "linear-gradient(to right, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)",
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "rotate(20deg)",
+            pointerEvents: "none",
+            zIndex: 9999
+        },
         },
       }),
     },

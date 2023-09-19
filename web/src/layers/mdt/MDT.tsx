@@ -29,24 +29,40 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
   },
   root: {
-    width: 1650,
-    height: 825,
+    width: "150vh",
+    height: "90vh",
+    overflow: "hidden",
+    borderRadius: "6.5vh",
     zIndex: 1,
-    ['@media (max-width: 1599px)']: {
-      width: 1200,
-      height: 700,
-    },
-
-    ['@media (max-width: 1279px)']: {
-      width: 1000,
-      height: 600,
-    },
   },
   body: {
     width: 'inherit',
     height: 'inherit',
     backgroundColor: theme.colors.durple[7],
-    borderRadius: theme.radius.md,
+    borderRadius: "6.5vh",
+    border: "6vh solid black",
+    '&::after': {
+        content: '""',
+        width: "100%",
+        height: "200%",
+        background: "linear-gradient(to right, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)",
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        transform: "rotate(20deg)",
+        pointerEvents: "none",
+    },
+    '&::before': {
+        content: '""',
+        width: "100%",
+        height: "100%",
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        borderRadius: "6.5vh",
+        border: ".4vh solid rgb(78, 78, 78)",
+        pointerEvents: "none",
+    }
   },
   main: {
     padding: theme.spacing.xs,
