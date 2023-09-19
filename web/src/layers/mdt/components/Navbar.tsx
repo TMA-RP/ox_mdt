@@ -14,8 +14,13 @@ const useStyles = createStyles((theme) => ({
     borderBottomLeftRadius: theme.radius.md,
     width: 300,
     height: '100%',
+    justifyContent: 'flex-start',
     padding: theme.spacing.xs,
   },
+  logo: {
+    width: "80%",
+    margin: "20px auto"
+  }
 }));
 
 const Navbar: React.FC = () => {
@@ -62,6 +67,7 @@ const Navbar: React.FC = () => {
     <>
       {!matches ? (
         <Stack className={classes.navContainer} justify="space-between">
+          <img src="./sast.png" className={classes.logo} />
           <Stack spacing={0}>
             {NAV_BUTTONS.map((button) => (
               <NavButton

@@ -7,6 +7,7 @@ const useStyles = createStyles((theme) => ({
     background: theme.colors.durple[4],
     borderRadius: theme.radius.md,
     padding: 8,
+    marginTop: 'auto'
   },
 }));
 
