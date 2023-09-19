@@ -1,8 +1,3 @@
--- TODO: sync units to other clients on the disaptch page
--- Every unit function should call an event on all people on the dispatch
--- page and send the new units table to refresh the existing data
--- memo should hopefully only rerender the unit cards that have chaged
-
 ---@type Units
 local units = {}
 local officers = require 'server.officers'
@@ -98,7 +93,7 @@ registerCallback('ox_mdt:createUnit', function(source, unitType)
         id = unitId,
         name = unitName
     }
-end)
+end, 'create_unit')
 
 ---@param source number
 ---@param unitId string
@@ -118,8 +113,6 @@ end)
 registerCallback('ox_mdt:getUnits', function()
     return units
 end)
-
---TODO: statebags sync and make work properly
 
 ---@param source number
 ---@param data {id: number, officers: string[]}
@@ -161,7 +154,7 @@ end)
 ---@param source number
 ---@param data {id: number, value: string}
 registerCallback('ox_mdt:setUnitType', function(source, data)
-    --TODO authorisation checks - isDispatch and belongs to the unit
+    --TODO authorisation checks - isDispatch or belongs to the unit
 
     units[data.id].type = data.value
 
