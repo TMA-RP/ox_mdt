@@ -12,6 +12,7 @@ local officers = require 'server.officers'
 ---@param data CallData
 function createCall(data)
     activeCalls[callId] = {
+        id = callId,
         code = data.code,
         offense = data.offense,
         completed = false,
