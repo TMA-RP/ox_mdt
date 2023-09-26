@@ -92,8 +92,9 @@ const BoloCard: React.FC<Props> = ({ bolo }) => {
       <ReadOnlyEditor content={bolo.contents} />
       {bolo.images && bolo.images.length > 0 && (
         <Group spacing="xs">
-          {bolo.images.map((image) => (
+          {bolo.images.map((image, index) => (
             <Image
+              key={`${image}-${index}`}
               src={image}
               width={105}
               height={105}
@@ -105,12 +106,6 @@ const BoloCard: React.FC<Props> = ({ bolo }) => {
                   withCloseButton: false,
                   padding: 0,
                   size: 'unset',
-                  styles: {
-                    content: {
-                      maxWidth: '50%',
-                      maxHeight: '50%',
-                    },
-                  },
                   transitionProps: { transition: 'pop' },
                 })
               }
