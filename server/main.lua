@@ -49,33 +49,41 @@ end, 'delete_announcement')
 ---@param source number
 ---@param page number
 registerCallback('ox_mdt:getBOLOs', function(source, page)
-    --todo: fetch bolos
+    local bolos = db.selectBOLOs(page)
+
+    for i = 1, #bolos do
+        bolos[i].images = json.decode(bolos[i].images) or nil
+    end
+
     return {
-        hasMore = false,
-        bolos = {}
+        hasMore = #bolos == 5 or false,
+        bolos = bolos
     }
 end)
 
 ---@param source number
 ---@param id number
 registerCallback('ox_mdt:deleteBOLO', function(source, id)
-    --todo: delete bolo
-    return true
-end)
+    return db.deleteBOLO(id)
+end, 'delete_bolo')
 
 ---@param source number
 ---@param data {id: number, contents: string, images: string[]}
 registerCallback('ox_mdt:editBOLO', function(source, data)
-    --todo: edit bolo
-    return true
+    --todo: creator check
+    return db.updateBOLO(data.id, data.contents, data.images)
 end)
 
 ---@param source number
 ---@param data {contents: string, images: string[]}
 registerCallback('ox_mdt:createBOLO', function(source, data)
-    --todo: create bolo
-    return true
-end)
+    local officer = officers.get(source)
+    local boloId = db.createBOLO(officer.stateId, data.contents)
+
+    db.createBOLOImages(boloId, data.images)
+
+    return boloId
+end, 'create_bolo')
 
 ---@param source number
 ---@param search string
@@ -170,13 +178,13 @@ end, 'save_criminal')
 ---@param source number
 ---@param data { id: number, evidence: Evidence }
 registerCallback('ox_mdt:addEvidence', function(source, data)
-    return db.addEvidence(data.id, data.evidence.type, data.evidence.label, data.evidence.value)
+    return db.addEvidence(data.id, data.evidence.label, data.evidence.image)
 end, 'add_evidence')
 
 ---@param source number
----@param data { id: number, label: string, value: string }
+---@param data { id: number, label: string, image: string }
 registerCallback('ox_mdt:removeEvidence', function(source, data)
-    return db.removeEvidence(data.id, data.label, data.value)
+    return db.removeEvidence(data.id, data.label, data.image)
 end, 'remove_evidence')
 
 ---@param source number

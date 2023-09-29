@@ -131,7 +131,7 @@ function db.selectCriminalsInvolved(reportId)
 end
 
 function db.selectEvidence(reportId)
-    return MySQL.rawExecute.await('SELECT `label`, `value`, `type` FROM `ox_mdt_reports_evidence` WHERE reportid = ?', { reportId })
+    return MySQL.rawExecute.await('SELECT `label`, `image` FROM `ox_mdt_reports_evidence` WHERE reportId = ?', { reportId })
 end
 
 ---@param reportId number
@@ -202,18 +202,17 @@ function db.removeOfficer(reportId, stateId)
 end
 
 ---@param id number
----@param type 'image' | 'item'
 ---@param label string
----@param value string | number 
-function db.addEvidence(id, type, label, value)
-    return MySQL.prepare.await('INSERT INTO `ox_mdt_reports_evidence` (`reportid`, `label`, `value`, `type`) VALUES (?, ?, ?, ?)', { id, label, value, type })
+---@param image string
+function db.addEvidence(id, label, image)
+    return MySQL.prepare.await('INSERT INTO `ox_mdt_reports_evidence` (`reportid`, `label`, `image`) VALUES (?, ?, ?)', { id, label, image })
 end
 
 ---@param id number
 ---@param label string
----@param value string
-function db.removeEvidence(id, label, value)
-    return MySQL.prepare.await('DELETE FROM `ox_mdt_reports_evidence` WHERE `reportid` = ? AND `label` = ? AND `value` = ?', { id, label, value })
+---@param image string
+function db.removeEvidence(id, label, image)
+    return MySQL.prepare.await('DELETE FROM `ox_mdt_reports_evidence` WHERE `reportid` = ? AND `label` = ? AND `image` = ?', { id, label, image })
 end
 
 ---@param id number
@@ -242,6 +241,51 @@ end
 ---@param id number
 function db.removeAnnouncement(id)
     return MySQL.prepare.await('DELETE FROM `ox_mdt_announcements` WHERE `id` = ?', { id })
+end
+
+function db.selectBOLOs(page)
+    return framework.getBOLOs({ (page - 1) * 5 })
+end
+
+---@param creator string
+---@param contents string
+function db.createBOLO(creator, contents)
+    return MySQL.prepare.await('INSERT INTO `ox_mdt_bolos` (`creator`, `contents`) VALUES (?, ?)', { creator, contents })
+end
+
+---@param id number
+---@param images string[]
+function db.createBOLOImages(id, images)
+    local queries = {}
+
+    for i = 1, #images do
+        local image = images[i]
+        queries[i] = { 'INSERT INTO `ox_mdt_bolos_images` (`boloId`, `image`) VALUES (?, ?)', { id, image } }
+    end
+
+    return MySQL.transaction.await(queries)
+end
+
+function db.deleteBOLO(id)
+    return MySQL.prepare.await('DELETE FROM `ox_mdt_bolos` WHERE id = ?', { id })
+end
+
+function db.updateBOLO(id, contents, images)
+    local queries = {
+        { 'DELETE FROM `ox_mdt_bolos_images` where `boloId` = ? ', { id } },
+    }
+    
+    local queryN = #queries
+
+    for i = 1, #images do
+        local image = images[i]
+        queryN += 1
+        queries[queryN] = { 'INSERT INTO `ox_mdt_bolos_images` (`boloId`, `image`) VALUES (?, ?)', { id, image } }
+    end
+
+    queries[queryN + 1] = { 'UPDATE `ox_mdt_bolos` SET `contents` = ? WHERE `id` = ?', { contents, id } }
+
+    return MySQL.transaction.await(queries)
 end
 
 ---@param search string

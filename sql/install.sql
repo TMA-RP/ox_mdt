@@ -74,8 +74,7 @@ CREATE TABLE
     IF NOT EXISTS `ox_mdt_reports_evidence` (
         `reportid` INT (10) UNSIGNED NOT NULL,
         `label` VARCHAR(50) NOT NULL DEFAULT '',
-        `value` VARCHAR(50) NOT NULL DEFAULT '',
-        `type` ENUM ('image', 'item') NOT NULL DEFAULT 'image',
+        `image` VARCHAR(90) NOT NULL DEFAULT '',
         INDEX `reportid` (`reportid`) USING BTREE,
         CONSTRAINT `FK__ox_mdt_reports` FOREIGN KEY (`reportid`) REFERENCES `ox_mdt_reports` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
     );
@@ -111,6 +110,27 @@ CREATE TABLE
     CONSTRAINT `ox_mdt_profiles_pk2` UNIQUE (`stateid`),
     CONSTRAINT `ox_mdt_profiles_characters_stateId_fk`
         FOREIGN KEY (`stateid`) REFERENCES `characters` (`stateId`)
+            ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `ox_mdt_bolos`
+(
+    `id`        INT UNSIGNED AUTO_INCREMENT
+        PRIMARY KEY,
+    `creator`   VARCHAR(7)                 NOT NULL,
+    `contents`  TEXT                       NULL,
+    `createdAt` DATETIME DEFAULT curtime() NOT NULL,
+    CONSTRAINT `ox_mdt_bolos_ox_mdt_profiles_stateid_fk`
+        FOREIGN KEY (`creator`) REFERENCES `ox_mdt_profiles` (`stateid`)
+            ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `ox_mdt_bolos_images`
+(
+    `boloId` INT UNSIGNED NOT NULL,
+    `image`  VARCHAR(90)  NULL,
+    CONSTRAINT `ox_mdt_bolos_images_ox_mdt_bolos_id_fk`
+        FOREIGN KEY (`boloId`) REFERENCES `ox_mdt_bolos` (`id`)
             ON UPDATE CASCADE ON DELETE CASCADE
 );
 

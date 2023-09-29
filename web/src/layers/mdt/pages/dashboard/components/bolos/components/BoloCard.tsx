@@ -1,15 +1,16 @@
 import React from 'react';
 import { BOLO } from '../../../../../../../typings/bolo';
-import { createStyles, Group, Stack, Text, Image, ActionIcon, Avatar, Menu } from '@mantine/core';
+import { ActionIcon, Avatar, createStyles, Group, Image, Menu, Stack, Text } from '@mantine/core';
 import ReadOnlyEditor from '../../../../../components/ReadOnlyEditor';
 import { modals } from '@mantine/modals';
 import dayjs from 'dayjs';
 import { IconDots, IconEdit, IconTrash } from '@tabler/icons-react';
 import locales from '../../../../../../../locales';
-import { hasPermission } from '../../../../../../../helpers/hasPermission';
+import { hasPermission } from '../../../../../../../helpers';
 import { useCharacter } from '../../../../../../../state';
 import { fetchNui } from '../../../../../../../utils/fetchNui';
 import CreateBoloModal from '../modals/CreateBoloModal';
+import { queryClient } from '../../../../../../../main';
 
 interface Props {
   bolo: BOLO;
@@ -31,15 +32,15 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BoloCard: React.FC<Props> = ({ bolo }) => {
+const BoloCard: React.ForwardRefRenderFunction<HTMLDivElement, Props> = ({ bolo }, ref) => {
   const { classes } = useStyles();
   const character = useCharacter();
 
   return (
-    <Stack className={classes.container}>
+    <Stack className={classes.container} ref={ref}>
       <Group position="apart">
         <Group h="100%">
-          <Avatar variant="light" color="blue" />
+          <Avatar variant="light" color="blue" src={bolo.image} />
           <Stack spacing={0} align="start">
             <Text c="dark.0" size="md" weight={500}>{`${bolo.firstName} ${bolo.lastName} · ${bolo.callSign}`}</Text>
             <Text c="dark.2" size="xs">
@@ -55,7 +56,7 @@ const BoloCard: React.FC<Props> = ({ bolo }) => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item
-              // disabled={bolo.stateId !== character.stateId}
+              disabled={bolo.stateId !== character.stateId}
               icon={<IconEdit size={18} />}
               onClick={() =>
                 modals.open({ title: locales.edit_bolo, children: <CreateBoloModal bolo={bolo} />, size: 'lg' })
@@ -80,6 +81,22 @@ const BoloCard: React.FC<Props> = ({ bolo }) => {
                   groupProps: { spacing: 6 },
                   onConfirm: async () => {
                     await fetchNui('deleteBOLO', bolo.id, { data: true });
+                    queryClient.setQueriesData<{ pages: { bolos: BOLO[]; hasMore: boolean }[]; pageParams: number[] }>(
+                      ['bolos'],
+                      (data) => {
+                        if (!data) return;
+
+                        const newPages: { bolos: BOLO[]; hasMore: boolean }[] = data.pages.map((page) => ({
+                          ...page,
+                          bolos: page.bolos.filter((oldBolo) => oldBolo.id !== bolo.id),
+                        }));
+
+                        return {
+                          pages: newPages,
+                          pageParams: data.pageParams,
+                        };
+                      }
+                    );
                   },
                 });
               }}
@@ -117,4 +134,4 @@ const BoloCard: React.FC<Props> = ({ bolo }) => {
   );
 };
 
-export default React.memo(BoloCard);
+export default React.memo(React.forwardRef(BoloCard));

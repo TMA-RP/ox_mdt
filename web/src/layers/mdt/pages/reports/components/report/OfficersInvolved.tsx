@@ -7,7 +7,7 @@ import { modals } from '@mantine/modals';
 import AddOfficerModal from '../modals/addOfficer/AddOfficerModal';
 import { fetchNui } from '../../../../../../utils/fetchNui';
 import locales from '../../../../../../locales';
-import { hasPermission } from '../../../../../../helpers/hasPermission';
+import { hasPermission } from '../../../../../../helpers';
 
 const OfficersInvolved: React.FC = () => {
   const id = useReportId();
@@ -21,7 +21,7 @@ const OfficersInvolved: React.FC = () => {
         <Text size="xl">{locales.officers_involved}</Text>
         <IconUsers />
       </Group>
-      <Group spacing="xs">
+      <Group spacing={6}>
         <BadgeButton
           disabled={!hasPermission(character, 'add_officer_involved')}
           label={locales.add_officer}

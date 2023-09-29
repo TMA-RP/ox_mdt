@@ -1,17 +1,14 @@
 import React from 'react';
-import { Box, Button, createStyles, Group, SimpleGrid, Stack, Text } from '@mantine/core';
-import { IconFileImport, IconReceipt } from '@tabler/icons-react';
+import { createStyles, Group, SimpleGrid, Stack, Text } from '@mantine/core';
+import { IconReceipt } from '@tabler/icons-react';
 import ReportsList from './components/list/ReportsList';
-import { modals } from '@mantine/modals';
-import CreateReportModal from './components/modals/CreateReportModal';
 import ActiveReport from './components/ActiveReport';
 import ListContainer from '../../components/ListContainer';
 import { reportsListAtoms, useSetReportsDebounce } from '../../../../state';
 import ListSearch from '../../components/ListSearch';
-import { queryClient } from '../../../../main';
-import { PartialReportData } from '../../../../typings';
 import locales from '../../../../locales';
 import CreateReportButton from './components/list/CreateReportButton';
+import { removePages } from '../../../../helpers';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -28,16 +25,7 @@ const Reports: React.FC = () => {
   const setDebouncedSearch = useSetReportsDebounce();
 
   React.useEffect(() => {
-    return () => {
-      queryClient.setQueriesData<{ pages: PartialReportData[][]; pageParams: number[] }>(['reports'], (data) => {
-        if (!data) return;
-
-        return {
-          pages: [data.pages[0]],
-          pageParams: [data.pageParams[0]],
-        };
-      });
-    };
+    return () => removePages(['reports']);
   }, []);
 
   return (

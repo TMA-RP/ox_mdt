@@ -3,31 +3,18 @@ import { Divider, Grid, Stack } from '@mantine/core';
 import ChargeCardsList from './ChargeCardsList';
 import SelectedChargesList from './SelectedChargesList';
 import { PrimitiveAtom } from 'jotai';
-import { Charge, Criminal } from '../../../../../../../typings';
-import {
-  chargeSearchAtoms,
-  useInfiniteCharges,
-  useSetChargeSearchDebounceValue,
-} from '../../../../../../../state/charges';
-import { queryClient } from '../../../../../../../main';
+import { Criminal } from '../../../../../../../typings';
+import { chargeSearchAtoms, useInfiniteCharges, useSetChargeSearchDebounceValue } from '../../../../../../../state';
 import ListSearch from '../../../../../components/ListSearch';
 import ListContainer from '../../../../../components/ListContainer';
+import { removePages } from '../../../../../../../helpers';
 
 const EditChargesModal: React.FC<{ criminalAtom: PrimitiveAtom<Criminal> }> = ({ criminalAtom }) => {
   const [data] = useInfiniteCharges();
   const setChargeSearchDebounceValue = useSetChargeSearchDebounceValue();
 
   React.useEffect(() => {
-    return () => {
-      queryClient.setQueriesData<{ pageParams: number[]; pages: [string, Charge[]][] }>(
-        ['charges'],
-        (data) =>
-          data && {
-            pages: data.pages.slice(0, 1),
-            pageParams: data.pageParams.slice(0, 1),
-          }
-      );
-    };
+    return () => removePages(['charges']);
   }, []);
 
   return (
