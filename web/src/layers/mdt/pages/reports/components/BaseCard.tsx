@@ -4,6 +4,7 @@ import { createStyles, Stack } from '@mantine/core';
 interface Props {
   children: React.ReactNode;
   h?: number;
+  grow?: boolean;
 }
 
 const useSyles = createStyles((theme) => ({
@@ -12,13 +13,17 @@ const useSyles = createStyles((theme) => ({
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.md,
   },
+  grow: {
+    flexGrow: 1,
+    height: "100%"
+  }
 }));
 
-const BaseCard: React.FC<Props> = ({ children, h }) => {
-  const { classes } = useSyles();
+const BaseCard: React.FC<Props> = ({ children, h, grow }) => {
+  const { classes, cx } = useSyles();
 
   return (
-    <Stack className={classes.baseCard} p="md" h={h}>
+    <Stack className={cx(classes.baseCard, { [classes.grow]: grow })} p="md" h={h}>
       {children}
     </Stack>
   );

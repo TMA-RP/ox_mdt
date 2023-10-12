@@ -18,6 +18,9 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.md,
   },
+  h100: {
+    height: "100%"
+  }
 }));
 
 const ActiveReport: React.FC = () => {
@@ -29,8 +32,8 @@ const ActiveReport: React.FC = () => {
       <>
         <Box sx={{ overflowY: 'scroll' }}>
           {isReportActive ? (
-            <Stack spacing="xs">
-              <BaseCard h={500}>
+            <Stack spacing="xs" className={classes.h100}>
+              <BaseCard grow={true}>
                 <ReportContent />
               </BaseCard>
               <BaseCard>

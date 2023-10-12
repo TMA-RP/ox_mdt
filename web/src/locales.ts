@@ -1,5 +1,5 @@
 import { isEnvBrowser } from './utils/misc';
-import locale from '../../locales/en.json';
+import locale from '../../locales/fr.json';
 import { printf } from 'fast-printf';
 
 const locales: Record<string, string | number> = {};
