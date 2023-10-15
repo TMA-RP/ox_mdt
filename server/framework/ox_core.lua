@@ -85,13 +85,26 @@ local ox = {}
 
 ---@param playerId number
 ---@param permission number | table<string, number>
+---@param permissionName string
 ---@return boolean?
-function ox.isAuthorised(playerId, permission)
-    if type(permission) == 'table' then
-        return Ox.GetPlayer(playerId)?.hasGroup(permission) and true
+function ox.isAuthorised(playerId, permission, permissionName)
+    local player = Ox.GetPlayer(playerId)
+
+    if player?.hasGroup('dispatch') then
+        local grade = player.getGroup('dispatch')
+        if type(permission) == 'table' then
+            if not permission.dispatch then return false end
+            return grade >= permission.dispatch
+        end
+
+        return permissionName == 'mdt.access' or false
     end
 
-    local _, grade = Ox.GetPlayer(playerId)?.hasGroup(config.policeGroups)
+    if type(permission) == 'table' then
+        return player?.hasGroup(permission) and true
+    end
+
+    local _, grade = player?.hasGroup(config.policeGroups)
 
     return grade and grade >= permission
 end
@@ -137,7 +150,7 @@ function ox.getCharacters(parameters, filter)
     local query = filter and selectCharactersFilter or selectCharacters
     return MySQL.rawExecute.await(query, parameters)
 end
-
+-- TODO: don't hardcode police group
 local selectOfficers = [[
     SELECT
         ox_mdt_profiles.id,
@@ -159,7 +172,7 @@ local selectOfficers = [[
     ON
         characters.stateId = ox_mdt_profiles.stateId
     WHERE
-        character_groups.name = "police"
+        character_groups.name IN ("police", "dispatch")
 ]]
 
 local selectOfficersFilter = selectOfficers .. ' AND MATCH (characters.stateId, `firstName`, `lastName`) AGAINST (? IN BOOLEAN MODE)'

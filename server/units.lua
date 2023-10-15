@@ -121,6 +121,8 @@ registerCallback('ox_mdt:setUnitOfficers', function(source, data)
     local includesCreator = false
     local newOfficers = {}
 
+    -- TODO: dispatch check?
+
     for i = 1, #data.officers do
         newOfficers[#newOfficers +1] = officers.get(tonumber(data.officers[i]))
     end
@@ -134,6 +136,11 @@ registerCallback('ox_mdt:setUnitOfficers', function(source, data)
     end
 
     if #data.officers == 0 or not includesCreator then
+        for i = 1, #units[data.id].members do
+            local officer = units[data.id].members[i]
+            Player(officer.playerId).state.mdtUnitId = nil
+        end
+
         units[data.id] = nil
         officers.triggerEvent('ox_mdt:refreshUnits', units)
 
@@ -149,12 +156,13 @@ registerCallback('ox_mdt:setUnitOfficers', function(source, data)
 
     officers.triggerEvent('ox_mdt:refreshUnits', units)
 
+    return true
 end)
 
 ---@param source number
 ---@param data {id: number, value: string}
 registerCallback('ox_mdt:setUnitType', function(source, data)
-    --TODO authorisation checks - isDispatch or belongs to the unit
+    --TODO authorisation checks - is dispatch or belongs to the unit
 
     units[data.id].type = data.value
 

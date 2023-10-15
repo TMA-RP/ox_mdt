@@ -17,7 +17,7 @@ function createCall(data)
         offense = data.offense,
         completed = false,
         units = {},
-        coords = data.coords,
+        coords = {data.coords[2], data.coords[1]},
         blip = data.blip,
         isEmergency = data.isEmergency,
         time = os.time() * 1000,
@@ -121,12 +121,12 @@ end, 'mark_call_completed')
 registerCallback('ox_mdt:setCallUnits', function(source, data)
     local officer = officers.get(source)
 
-    -- todo: if not officer.isDispatch then return end
+    -- todo: if not officer.group == = 'dispatch' then return end
 
     activeCalls[data.id].units = {}
     for i = 1, #data.units do
         local unitId = data.units[i]
-        activeCalls[data.id].units[unitId] = units.getUnit(unitId)
+        activeCalls[data.id].units[unitId] = units.getUnit(tostring(unitId))
     end
 
     officers.triggerEvent('ox_mdt:setCallUnits', { id = data.id, units = activeCalls[data.id].units })
