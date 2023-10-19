@@ -120,8 +120,9 @@ registerCallback('ox_mdt:setUnitOfficers', function(source, data)
     local unit = units[data.id]
     local includesCreator = false
     local newOfficers = {}
+    local thisOfficer = officers.get(source)
 
-    -- TODO: dispatch check?
+    if thisOfficer.group ~= 'dispatch' then return end
 
     for i = 1, #data.officers do
         newOfficers[#newOfficers +1] = officers.get(tonumber(data.officers[i]))
@@ -162,7 +163,9 @@ end)
 ---@param source number
 ---@param data {id: number, value: string}
 registerCallback('ox_mdt:setUnitType', function(source, data)
-    --TODO authorisation checks - is dispatch or belongs to the unit
+    local officer = officers.get(source)
+
+    if officer.group ~= 'dispatch' and officer.unitId ~= data.id then return end
 
     units[data.id].type = data.value
 

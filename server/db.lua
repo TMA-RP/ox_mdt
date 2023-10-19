@@ -226,6 +226,12 @@ function db.selectAnnouncements(page)
     return framework.getAnnouncements({ (page - 1) * 5 })
 end
 
+---@param id number
+---@return Announcement
+function db.selectAnnouncement(id)
+    return MySQL.prepare.await('SELECT * FROM `ox_mdt_announcements` WHERE `id` = ?', { id })
+end
+
 ---@param creator string
 ---@param contents string
 function db.createAnnouncement(creator, contents)
@@ -243,8 +249,14 @@ function db.removeAnnouncement(id)
     return MySQL.prepare.await('DELETE FROM `ox_mdt_announcements` WHERE `id` = ?', { id })
 end
 
+---@param page number
 function db.selectBOLOs(page)
     return framework.getBOLOs({ (page - 1) * 5 })
+end
+
+---@param id number
+function db.selectBOLO(id)
+    return MySQL.prepare.await('SELECT * FROM `ox_mdt_bolos` WHERE `id` = ?', { id })
 end
 
 ---@param creator string

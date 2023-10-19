@@ -1,6 +1,7 @@
 local registerCallback = require 'server.utils.registerCallback'
 local db = require 'server.db'
 local officers = require 'server.officers'
+local isAuthorised = require 'server.utils.isAuthorised'
 
 require 'server.units'
 require 'server.charges'
@@ -32,8 +33,11 @@ end, 'create_announcement')
 ---@param data { announcement: Announcement, value: string }
 registerCallback('ox_mdt:editAnnouncement', function(source, data)
     local officer = officers.get(source)
+    local announcement = db.selectAnnouncement(data.id)
 
-    if not officer or data.announcement.stateId ~= officer.stateId then return end
+    if not officer then return end
+
+    if announcement.creator ~= officer.stateId then return end
 
     return db.updateAnnouncementContents(data.announcement.id, data.value)
 end)
@@ -41,7 +45,10 @@ end)
 ---@param source number
 ---@param id number
 registerCallback('ox_mdt:deleteAnnouncement', function(source, id)
-    -- todo: check for creator
+    local officer = officers.get(source)
+    local announcement = db.selectAnnouncement(id)
+
+    if not isAuthorised(source, 'delete_announcement') and announcement.creator ~= officer.stateId then return end
 
     return db.removeAnnouncement(id)
 end, 'delete_announcement')
@@ -70,7 +77,13 @@ end, 'delete_bolo')
 ---@param source number
 ---@param data {id: number, contents: string, images: string[]}
 registerCallback('ox_mdt:editBOLO', function(source, data)
-    --todo: creator check
+    local officer = officers.get(source)
+    local bolo = db.selectBOLO(data.id)
+
+    if not officer then return end
+
+    if bolo.creator ~= officer.stateId then return end
+
     return db.updateBOLO(data.id, data.contents, data.images)
 end)
 
@@ -119,7 +132,6 @@ registerCallback('ox_mdt:getReport', function(source, reportId)
     local response = db.selectReportById(reportId)
 
     if response then
-        ---@todo officersInvovled callSigns
         response.officersInvolved = db.selectOfficersInvolved(reportId)
         response.evidence = db.selectEvidence(reportId)
         response.criminals = db.selectCriminalsInvolved(reportId)
