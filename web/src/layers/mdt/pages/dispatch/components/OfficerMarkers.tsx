@@ -11,7 +11,7 @@ import { Officer } from '../../../../../typings';
 
 const useStyles = createStyles((theme) => ({
   icon: {
-    color: theme.colors.blue[8],
+    color: "#fcdb03",
   },
 }));
 
