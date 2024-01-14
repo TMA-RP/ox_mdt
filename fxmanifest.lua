@@ -1,20 +1,23 @@
---[[ FX Information ]]--
-fx_version   'cerulean'
+--[[ FX Information ]]
+                       --
+fx_version 'cerulean'
 use_experimental_fxv2_oal 'yes'
-lua54        'yes'
-game         'gta5'
+lua54 'yes'
+game 'gta5'
 
---[[ Resource Information ]]--
-name         'ox_mdt'
-version      '0.3.0'
-description  'MDT'
-author       'overextended'
-repository   'https://github.com/overextended/ox_mdt'
+--[[ Resource Information ]]
+                             --
+name 'ox_mdt'
+version '0.3.0'
+description 'MDT'
+author 'overextended'
+repository 'https://github.com/overextended/ox_mdt'
 
---[[ Manifest ]]--
+--[[ Manifest ]]
+                 --
 dependencies {
-	'/server:6279',
-	'/onesync',
+    '/server:6279',
+    '/onesync',
 }
 
 ox_libs {
@@ -22,7 +25,7 @@ ox_libs {
 }
 
 shared_scripts {
-	'@ox_lib/init.lua',
+    '@ox_lib/init.lua',
 }
 
 client_scripts {
@@ -31,7 +34,7 @@ client_scripts {
 }
 
 server_scripts {
-	'@oxmysql/lib/MySQL.lua',
+    '@oxmysql/lib/MySQL.lua',
     '@ox_core/imports/server.lua',
     'server/main.lua',
 }
