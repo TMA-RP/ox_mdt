@@ -80,7 +80,7 @@ local function openMDT()
     end
 
     if not tablet then
-        local model = lib.requestModel(`prop_cs_tablet`)
+        local model = lib.requestModel(`tma_tablet_mdt`)
 
         if not model then return end
 
