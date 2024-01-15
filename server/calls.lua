@@ -17,7 +17,7 @@ function createCall(data)
         offense = data.offense,
         completed = false,
         units = {},
-        coords = {data.coords[2], data.coords[1]},
+        coords = { data.coords[1], data.coords[2] },
         blip = data.blip,
         isEmergency = data.isEmergency,
         time = os.time() * 1000,
