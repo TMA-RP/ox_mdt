@@ -12,7 +12,7 @@ const UnitBadge: React.FC<Props> = ({ unit }) => {
     <Badge
       leftSection={
         <Stack>
-          {unit.type === 'car' ? (
+          {["lincoln", "adam", "tango"].includes(unit.type) ? (
             <IconCar size={18} />
           ) : unit.type === 'motor' ? (
             <IconMotorbike size={18} />

@@ -54,7 +54,7 @@ const PartialProfile: React.ForwardRefRenderFunction<HTMLDivElement | null, Prop
             {profile.firstName} {profile.lastName}
           </Text>
           <Text size="xs" c="dark.2">
-            {locales.date_of_birth}: {dayjs(profile.dob).format('YYYY/MM/DD')}
+            {locales.date_of_birth}: {dayjs(profile.dob).format('DD/MM/YYYY')}
           </Text>
           <Text size="xs" c="dark.2">
             {locales.state_id}: {profile.stateId}

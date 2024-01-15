@@ -35,7 +35,7 @@ const UnitCard: React.FC<{ unit: Unit; isInThisUnit: boolean; isDispatch: boolea
     <Stack className={classes.unitContainer}>
       <Group position="apart">
         <Group spacing="xs">
-          {unit.type === 'car' ? (
+          {["lincoln", "adam", "tango"].includes(unit.type) ? (
             <IconCar />
           ) : unit.type === 'motor' ? (
             <IconMotorbike />

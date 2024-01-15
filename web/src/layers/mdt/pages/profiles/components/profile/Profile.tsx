@@ -17,14 +17,13 @@ const Profile: React.FC = () => {
   return (
     <>
       <AvatarWrapper />
+      <ProfileField icon={IconUser} label={locales.name} value={`${profile.firstName} ${profile.lastName}`} />
       <SimpleGrid cols={2} spacing={6}>
-        <ProfileField icon={IconUser} label={locales.name} value={`${profile.firstName} ${profile.lastName}`} />
         <ProfileField icon={IconId} label={locales.state_id} value={profile.stateId} />
-        <ProfileField icon={IconPhone} label={locales.phone_number} value={profile.phoneNumber} />
         <ProfileField
           icon={IconCalendar}
           label={locales.date_of_birth}
-          value={dayjs(profile.dob).format('YYYY/MM/DD')}
+          value={dayjs(profile.dob).format('DD/MM/YYYY')}
         />
       </SimpleGrid>
       <Stack spacing="xs" h="100%">

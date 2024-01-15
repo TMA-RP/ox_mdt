@@ -4,7 +4,7 @@ import locales from '../../../../locales';
 import RosterTable from './components/RosterTable';
 import ListSearch from '../../components/ListSearch';
 import { tableSearchAtoms, useSetRosterSearchDebounce } from '../../../../state/roster/tableSearch';
-import HireOfficerButton from './components/HireOfficerButton';
+// import HireOfficerButton from './components/HireOfficerButton';
 
 const useStyles = createStyles((theme) => ({
   searchContainer: {
@@ -28,7 +28,7 @@ const Roster: React.FC = () => {
           valueAtom={tableSearchAtoms.currentValueAtom}
           style={{ flex: '1 0 0' }}
         />
-        <HireOfficerButton />
+        {/* <HireOfficerButton /> */}
       </Group>
       <RosterTable />
     </Stack>

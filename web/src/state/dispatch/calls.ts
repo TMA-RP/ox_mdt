@@ -20,7 +20,7 @@ const DEBUG_CALLS: Call[] = [
     units: [
       {
         name: 'Unit 132',
-        type: 'car',
+        type: 'adam',
         members: [
           { firstName: 'Billy', lastName: 'Bob', callSign: 132, stateId: '321553', playerId: 1, position: [0, 0, 0] },
         ],
@@ -60,7 +60,7 @@ const DEBUG_CALLS: Call[] = [
     units: [
       {
         name: 'Unit 132',
-        type: 'car',
+        type: 'adam',
         members: [
           { firstName: 'Billy', lastName: 'Bob', callSign: 132, stateId: '311342', playerId: 1, position: [0, 0, 0] },
           {
@@ -127,7 +127,7 @@ const DEBUG_CALLS: Call[] = [
     units: [
       {
         name: 'Unit 1',
-        type: 'car',
+        type: 'adam',
         members: [
           { firstName: 'Billy', lastName: 'bob', callSign: 132, stateId: '913213', playerId: 1, position: [0, 0, 0] },
         ],

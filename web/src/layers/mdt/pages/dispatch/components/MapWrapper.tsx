@@ -1,7 +1,7 @@
 // https://github.com/BubbleDK/bub-mdt/blob/main/web/src/pages/dispatch/index.tsx
 
 import React from 'react';
-import { MapContainer } from 'react-leaflet';
+import { MapContainer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Map from './Map';
 import L from 'leaflet';
@@ -13,6 +13,8 @@ import { useSetDispatchMap } from '../../../../../state';
 const MapWrapper: React.FC = () => {
     const theme = useMantineTheme();
     const setMap = useSetDispatchMap();
+
+    const GridStyle = L.tileLayer('https://api.ceeb.studio/public/mdt_map/{z}/{x}/{y}.png', { minZoom: 0, maxZoom: 5, noWrap: true, attribution: 'Online map GTA V', id: 'styleGrid map', });
 
     const CRS = L.extend({}, L.CRS.Simple, {
         projection: L.Projection.LonLat,
@@ -29,19 +31,20 @@ const MapWrapper: React.FC = () => {
             return Math.sqrt(x_difference * x_difference + y_difference * y_difference);
         },
         transformation: new L.Transformation(0.02072, 117.3, -0.0205, 172.8),
-        infinite: false,
+        infinite: true,
     });
 
     return (
         <MapContainer
-            center={[0, -1024]}
+            center={[0, 0]}
             maxBoundsViscosity={1.0}
             preferCanvas
             ref={setMap}
-            zoom={6}
-            maxZoom={6}
+            zoom={5}
+            maxZoom={5}
             minZoom={2}
             zoomControl={false}
+            layers={[GridStyle]}
             crs={CRS}
             style={{ width: '100%', height: '100%', borderRadius: theme.radius.md, zIndex: 1, backgroundColor: "#00021c" }}
         >

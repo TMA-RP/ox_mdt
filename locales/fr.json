@@ -11,7 +11,7 @@
     "attached_units": "Unités attachées (%s)",
     "manage_units": "Gérer les unités",
     "avatar_description": "URL de l'image à utiliser comme image de profil (128x128)",
-    "boat": "Bateau",
+    "boat": "BAKER",
     "calls": "Appels",
     "cancel": "Annuler",
     "car": "Voiture",
@@ -40,7 +40,7 @@
     "expires_in": "Expire dans",
     "find_on_map": "Trouver sur la carte",
     "fine": "Amende",
-    "heli": "Hélicoptère",
+    "heli": "HENRY",
     "image": "Image",
     "image_label": "Étiquette de l'image",
     "image_label_required": "L'étiquette de l'image est requise",
@@ -59,7 +59,7 @@
     "mark_call_as_completed": "Marquer l'appel comme terminé ?",
     "mark_call_as_completed_confirm": "Marquer %s (%s) comme terminé ?",
     "months": "mois",
-    "motor": "Moteur",
+    "motor": "MARY",
     "name": "Nom",
     "no_active_warrants": "Aucun mandat actif",
     "no_announcements": "Aucune annonce",
@@ -140,5 +140,8 @@
     "no_bolos": "Aucun avis de recherche actif",
     "delete_bolo": "Supprimer l'avis de recherche",
     "delete_bolo_confirm": "Êtes-vous sûr de vouloir supprimer cet avis de recherche ?",
-    "edit_bolo": "Éditer l'avis de recherche"
+    "edit_bolo": "Éditer l'avis de recherche",
+    "lincoln": "LINCOLN",
+    "adam": "ADAM",
+    "tango": "TANGO"
 }

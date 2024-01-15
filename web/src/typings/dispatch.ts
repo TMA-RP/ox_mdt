@@ -1,6 +1,6 @@
 import { Officer } from './officer';
 
-export type UnitType = 'car' | 'motor' | 'heli' | 'boat';
+export type UnitType = 'lincoln' | 'adam' | 'tango' | 'motor' | 'heli' | 'boat';
 
 export interface Call {
   id: number;

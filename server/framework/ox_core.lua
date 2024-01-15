@@ -150,6 +150,7 @@ function ox.getCharacters(parameters, filter)
     local query = filter and selectCharactersFilter or selectCharacters
     return MySQL.rawExecute.await(query, parameters)
 end
+
 -- TODO: don't hardcode police group
 local selectOfficers = [[
     SELECT
@@ -214,6 +215,7 @@ local selectWarrants = [[
         characters.stateId,
         characters.firstName,
         characters.lastName,
+        profiles.image,
         DATE_FORMAT(warrants.expiresAt, "%Y-%m-%d %T") AS expiresAt
     FROM
         `ox_mdt_warrants` warrants
@@ -221,6 +223,10 @@ local selectWarrants = [[
         `characters`
     ON
         warrants.stateid = characters.stateid
+    LEFT JOIN
+        `ox_mdt_profiles` profiles
+    ON
+        warrants.stateid = profiles.stateid
 ]]
 
 local selectWarrantsFilter = selectWarrants .. ' WHERE MATCH (characters.stateId, `firstName`, `lastName`) AGAINST (? IN BOOLEAN MODE)'
@@ -292,7 +298,7 @@ function ox.getOfficersInvolved(parameters)
             characters.stateId = officer.stateId
         LEFT JOIN
             ox_mdt_profiles profile
-        ON 
+        ON
             characters.stateId = profile.stateId
         WHERE
             reportid = ?
@@ -428,7 +434,7 @@ end
 ---@param source number
 ---@param data {stateId: string, group: string, grade: number}
 registerCallback('ox_mdt:setOfficerRank', function(source, data)
-    local player = Ox.GetPlayerByFilter({stateId = data.stateId})
+    local player = Ox.GetPlayerByFilter({ stateId = data.stateId })
 
     if player then
         for i = 1, #config.policeGroups do
@@ -468,7 +474,7 @@ end, 'set_officer_rank')
 ---@param source number
 ---@param stateId number
 registerCallback('ox_mdt:fireOfficer', function(source, stateId)
-    local player = Ox.GetPlayerByFilter({stateId = stateId})
+    local player = Ox.GetPlayerByFilter({ stateId = stateId })
 
     if player then
         for i = 1, #config.policeGroups do
@@ -489,7 +495,7 @@ end, 'fire_officer')
 ---@param source number
 ---@param stateId string
 registerCallback('ox_mdt:hireOfficer', function(source, stateId)
-    local player = Ox.GetPlayerByFilter({stateId = stateId})
+    local player = Ox.GetPlayerByFilter({ stateId = stateId })
 
     if player then
         if player.hasGroup(config.policeGroups) then return false end

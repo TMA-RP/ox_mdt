@@ -189,9 +189,9 @@ end)
 ---@param clientCb? fun(data: any, cb: function)
 local function serverNuiCallback(event, clientCb)
     RegisterNuiCallback(event, function(data, cb)
-        print('triggered ' .. event)
+        -- print('triggered ' .. event)
         local response = lib.callback.await('ox_mdt:' .. event, false, data)
-        print('response ' .. event, json.encode(response, { indent = true, sort_keys = true }))
+        -- print('response ' .. event, json.encode(response, { indent = true, sort_keys = true }))
         if clientCb then return clientCb(response, cb) end
         cb(response)
     end)
@@ -283,12 +283,12 @@ end)
 
 ---@param data {id: number, call: Call}
 RegisterNetEvent('ox_mdt:createCall', function(data)
+    print(json.encode(data.call, { indent = true, sort_keys = true }))
     data.call.id = data.id
     data.call.location = GetStreetNameFromHashKey(GetStreetNameAtCoord(data.call.coords[1], data.call.coords[2], 0))
 
     --todo: play more emergent sound for isEmergency
     PlaySoundFrontend(-1, 'Near_Miss_Counter_Reset', 'GTAO_FM_Events_Soundset', false)
-
     SendNUIMessage({
         action = 'addCall',
         data = data.call
@@ -327,36 +327,9 @@ RegisterNetEvent('ox_mdt:refreshUnits', function(data)
     })
 end)
 
-local blips = {}
-
 ---@param data Officer[]
 RegisterNetEvent('ox_mdt:updateOfficerPositions', function(data)
     if not hasLoadedUi then return end
-
-    for i = 1, #data do
-        local officer = data[i]
-
-        if officer.stateId ~= player.stateid then
-            local blip = blips[officer.stateId]
-
-            if not blip then
-                local name = ('police:%s'):format(officer.stateId)
-                blip = AddBlipForCoord(officer.position[2], officer.position[1], officer.position[3])
-                blips[officer.stateId] = blip
-
-                SetBlipSprite(blip, 1)
-                SetBlipDisplay(blip, 3)
-                SetBlipColour(blip, 42)
-                ShowFriendIndicatorOnBlip(blip, true)
-                AddTextEntry(name, ('%s %s (%s)'):format(officer.firstName, officer.lastName, officer.callSign))
-                BeginTextCommandSetBlipName(name)
-                EndTextCommandSetBlipName(blip)
-                SetBlipCategory(blip, 7)
-            else
-                SetBlipCoords(blip, officer.position[2], officer.position[1], officer.position[3])
-            end
-        end
-    end
 
     SendNUIMessage({
         action = 'updateOfficerPositions',

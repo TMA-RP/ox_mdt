@@ -15,16 +15,16 @@ String.prototype.format = function (...args: any[]): string {
 };
 
 export function setLocale(data: typeof locale) {
-  for (const key in locales) locales[key] = key;
-  for (const [key, value] of Object.entries(data)) {
-    locales[key] = value;
-  }
+//   for (const key in locales) locales[key] = key;
+//   for (const [key, value] of Object.entries(data)) {
+//     locales[key] = value;
+//   }
 }
 
-if (isEnvBrowser()) {
+// if (isEnvBrowser()) {
   for (const [key, value] of Object.entries(locale)) {
     locales[key] = value;
   }
-}
+// }
 
 export default locales as typeof locale;

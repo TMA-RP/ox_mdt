@@ -55,7 +55,7 @@ const PartialReport: React.ForwardRefRenderFunction<HTMLDivElement | null, Props
       <Text>{report.title}</Text>
       <Group position="apart">
         <Text size="xs" c="dark.2">
-          {report.author} - {dayjs(report.date).format('YYYY/MM/DD')}
+          {report.author} - {dayjs(report.date).format('DD/MM/YYYY')}
         </Text>
         <Text size="xs" c="dark.2">
           #{report.id}

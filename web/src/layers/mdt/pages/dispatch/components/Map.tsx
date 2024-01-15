@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageOverlay, useMap } from 'react-leaflet';
+import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 const Map: React.FC = () => {
@@ -13,7 +13,7 @@ const Map: React.FC = () => {
     map.setMaxBounds(bounds);
     map.setView([0, 0], 2);
 
-    return <ImageOverlay url="https://cfx-nui-ox_mdt/web/build/sastmap.png" bounds={bounds} />;
+    return null;
 };
 
 export default Map;

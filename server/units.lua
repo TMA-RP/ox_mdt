@@ -78,8 +78,8 @@ registerCallback('ox_mdt:createUnit', function(source, unitType)
     if not officer or not officer.callSign then return end
 
     ---@type string
-    local unitId = officer.callSign
-    local unitName = ('Unit %s'):format(unitId)
+    local unitId = officer.callSign or os.time()
+    local unitName = ('%s %s'):format(locales[unitType], unitId)
 
 
     units[unitId] = {
@@ -125,7 +125,7 @@ registerCallback('ox_mdt:setUnitOfficers', function(source, data)
     if thisOfficer.group ~= 'dispatch' then return end
 
     for i = 1, #data.officers do
-        newOfficers[#newOfficers +1] = officers.get(tonumber(data.officers[i]))
+        newOfficers[#newOfficers + 1] = officers.get(tonumber(data.officers[i]))
     end
 
     for i = 1, #unit.members do
@@ -168,6 +168,7 @@ registerCallback('ox_mdt:setUnitType', function(source, data)
     if officer.group ~= 'dispatch' and officer.unitId ~= data.id then return end
 
     units[data.id].type = data.value
+    units[data.id].name = ('%s %s'):format(locales[data.value], data.id)
 
     officers.triggerEvent('ox_mdt:refreshUnits', units)
 

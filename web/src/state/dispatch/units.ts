@@ -9,7 +9,7 @@ const DEBUG_UNITS: Unit[] = [
   {
     name: 'Unit 132',
     members: [],
-    type: 'car',
+    type: 'adam',
     id: 132,
   },
 ];

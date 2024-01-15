@@ -46,7 +46,7 @@ const CreateReportModal: React.FC = () => {
       <Stack>
         <TextInput label={locales.report_title} data-autofocus withAsterisk {...form.getInputProps('title')} />
         <Button type="submit" fullWidth variant="light" loading={isLoading}>
-          Confirm
+          {locales.confirm}
         </Button>
       </Stack>
     </form>

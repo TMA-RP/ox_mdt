@@ -46,14 +46,14 @@ const CallCard: React.FC<{ call: Call }> = ({ call }) => {
                   setLoaderModal(true);
                   const resp = await fetchNui<number>(
                     'createReport',
-                    `${call.offense} - ${dayjs(call.time).format('YYYY/MM/DD')}`,
+                    `${call.offense} - ${dayjs(call.time).format('DD/MM/YYYY')}`,
                     { data: 199 }
                   );
                   navigate('/reports');
                   const officers: Officer[] = [];
                   call.units.map((unit) => unit.members.map((officer) => officers.push(officer)));
                   setReport({
-                    title: `${call.offense} - ${dayjs(call.time).format('YYYY/MM/DD')}`,
+                    title: `${call.offense} - ${dayjs(call.time).format('DD/MM/YYYY')}`,
                     description: '<p></p>',
                     id: resp,
                     evidence: [],

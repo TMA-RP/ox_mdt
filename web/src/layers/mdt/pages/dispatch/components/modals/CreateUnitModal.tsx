@@ -9,7 +9,7 @@ import locales from '../../../../../../locales';
 
 const CreateUnitModal: React.FC = () => {
   const setCharacter = useSetCharacter();
-  const [value, setValue] = React.useState<UnitType>('car');
+  const [value, setValue] = React.useState<UnitType>('lincoln');
 
   const handleConfirm = async () => {
     modals.closeAll();
@@ -27,16 +27,18 @@ const CreateUnitModal: React.FC = () => {
         label={locales.unit_vehicle_type}
         withinPortal
         icon={<IconCar size={20} />}
-        defaultValue="car"
+        defaultValue="lincoln"
         data={[
-          { label: locales.car, value: 'car' },
-          { label: locales.boat, value: 'boat' },
-          { label: locales.heli, value: 'heli' },
+          { label: locales.lincoln, value: 'lincoln' },
+          { label: locales.adam, value: 'adam' },
+          { label: locales.tango, value: 'tango' },
           { label: locales.motor, value: 'motor' },
+          { label: locales.heli, value: 'heli' },
+          { label: locales.boat, value: 'boat' },
         ]}
       />
       <Button variant="light" onClick={handleConfirm}>
-        Confirm
+        {locales.confirm}
       </Button>
     </Stack>
   );

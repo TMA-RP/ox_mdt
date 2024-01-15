@@ -28,16 +28,18 @@ const ChangeUnitTypeModal: React.FC<Props> = ({ id, initialValue }) => {
         onChange={(val: UnitType) => setValue(val)}
         label={locales.unit_vehicle_type}
         withinPortal
-        defaultValue="car"
+        defaultValue="lincoln"
         data={[
-          { label: locales.car, value: 'car' },
-          { label: locales.boat, value: 'boat' },
-          { label: locales.heli, value: 'heli' },
+          { label: locales.lincoln, value: 'lincoln' },
+          { label: locales.adam, value: 'adam' },
+          { label: locales.tango, value: 'tango' },
           { label: locales.motor, value: 'motor' },
+          { label: locales.heli, value: 'heli' },
+          { label: locales.boat, value: 'boat' },
         ]}
       />
       <Button variant="light" onClick={handleConfirm} loading={isLoading}>
-        Confirm
+        {locales.confirm}
       </Button>
     </Stack>
   );

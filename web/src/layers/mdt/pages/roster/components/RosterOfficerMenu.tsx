@@ -5,7 +5,7 @@ import { RosterOfficer } from '../../../../../typings';
 import locales from '../../../../../locales';
 import { modals } from '@mantine/modals';
 import SetCallSignModal from './modals/SetCallSignModal';
-import SetRankModal from './modals/SetRankModal';
+// import SetRankModal from './modals/SetRankModal';
 import { useSetRosterRecords } from '../../../../../state/roster';
 import { fetchNui } from '../../../../../utils/fetchNui';
 import { useCharacter } from '../../../../../state';
@@ -42,7 +42,7 @@ const RosterOfficerMenu: React.FC<{ officer: RosterOfficer }> = ({ officer }) =>
           >
             {locales.set_call_sign}
           </Menu.Item>
-          <Menu.Item
+          {/* <Menu.Item
             disabled={!hasPermission(character, 'set_officer_rank')}
             icon={<IconArrowBadgeUp size={20} />}
             onClick={() =>
@@ -81,7 +81,7 @@ const RosterOfficerMenu: React.FC<{ officer: RosterOfficer }> = ({ officer }) =>
             }
           >
             {locales.fire_officer}
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu.Dropdown>
       </Menu>
     </Group>
