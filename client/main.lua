@@ -135,14 +135,7 @@ lib.addKeybind({
     description = 'Toggle MDT calls focus',
     name = 'focusCalls',
     onPressed = function()
-        if callsAreFocused then
-            callsAreFocused = false
-            SetNuiFocus(false, false)
-            SetNuiFocusKeepInput(false)
-            return
-        end
-
-        if IsNuiFocused() or IsPauseMenuActive() then return end
+        if callsAreFocused or IsNuiFocused() or IsPauseMenuActive() then return end
 
         callsAreFocused = true
 
@@ -158,6 +151,11 @@ lib.addKeybind({
             DisableControlAction(2, 200, true)
             Wait(0)
         end
+    end,
+    onReleased = function()
+        callsAreFocused = false
+        SetNuiFocus(false, false)
+        SetNuiFocusKeepInput(false)
     end
 })
 
@@ -283,7 +281,6 @@ end)
 
 ---@param data {id: number, call: Call}
 RegisterNetEvent('ox_mdt:createCall', function(data)
-    print(json.encode(data.call, { indent = true, sort_keys = true }))
     data.call.id = data.id
     data.call.location = GetStreetNameFromHashKey(GetStreetNameAtCoord(data.call.coords[1], data.call.coords[2], 0))
 

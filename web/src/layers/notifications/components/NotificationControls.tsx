@@ -11,7 +11,7 @@ const NotificationControls: React.FC<{ call: Call }> = ({ call }) => {
 
   return (
     <Group spacing={6}>
-      <Tooltip label={attached ? "Attacher votre unité" : "Détacher votre unité"} position="top">
+      <Tooltip label={attached ? "Détacher votre unité" : "Attacher votre unité"} position="top">
         <ActionIcon
           variant="light"
           color="blue"

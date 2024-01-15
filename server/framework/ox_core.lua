@@ -40,7 +40,7 @@ local function addOfficer(playerId)
 
     local group, grade = player.hasGroup(config.policeGroups)
 
-    if group and grade then
+    if group and grade and player.get("inDuty") then
         officers.add(playerId, player.firstName, player.lastName, player.stateId, group, grade)
     end
 end
@@ -69,6 +69,14 @@ AddEventHandler('ox:setGroup', function(playerId, name, grade)
     end
 
     addOfficer(playerId)
+end)
+
+AddEventHandler('ceeb_duty:changePlayerState', function(playerId, inDuty)
+    if inDuty then
+        addOfficer(playerId)
+    else
+        officers.remove(playerId)
+    end
 end)
 
 AddEventHandler('ox:playerLogout', function(playerId)
