@@ -11,7 +11,7 @@ const NotificationControls: React.FC<{ call: Call }> = ({ call }) => {
 
   return (
     <Group spacing={6}>
-      <Tooltip label="Attach" position="top">
+      <Tooltip label={attached ? "Attacher votre unité" : "Détacher votre unité"} position="top">
         <ActionIcon
           variant="light"
           color="blue"
@@ -23,7 +23,7 @@ const NotificationControls: React.FC<{ call: Call }> = ({ call }) => {
           {attached ? <IconUnlink size={20} /> : <IconLink size={20} />}
         </ActionIcon>
       </Tooltip>
-      <Tooltip label="Add waypoint" position="top">
+      <Tooltip label="Mettre le point GPS" position="top">
         <ActionIcon variant="light" color="blue" onClick={() => fetchNui('setWaypoint', call.coords).then()}>
           <IconMapPin size={20} />
         </ActionIcon>
