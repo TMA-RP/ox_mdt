@@ -58,7 +58,7 @@
     "mark_as_completed": "Marquer comme terminé",
     "mark_call_as_completed": "Marquer l'appel comme terminé ?",
     "mark_call_as_completed_confirm": "Marquer %s (%s) comme terminé ?",
-    "months": "mois",
+    "months": "heures",
     "motor": "MARY",
     "name": "Nom",
     "no_active_warrants": "Aucun mandat actif",
@@ -98,7 +98,7 @@
     "search_warrants": "Rechercher des mandats...",
     "set_waypoint": "Définir le point de repère",
     "state_id": "Identifiant de l'État",
-    "time": "Heure",
+    "time": "Peine d'emprisonnement maximale",
     "unit_vehicle_type": "Type de véhicule de l'unité",
     "units": "Unités",
     "units_not_active": "Aucune unité active",
@@ -143,5 +143,8 @@
     "edit_bolo": "Éditer l'avis de recherche",
     "lincoln": "LINCOLN",
     "adam": "ADAM",
-    "tango": "TANGO"
+    "tango": "TANGO",
+    "misdemeanor": "Délit",
+    "felony": "Crime",
+    "infraction": "Infraction"
 }
