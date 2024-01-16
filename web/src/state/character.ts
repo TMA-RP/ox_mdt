@@ -23,6 +23,7 @@ const characterAtom = atom<Character>(
         grade: 0,
         group: '',
         callSign: '',
+        image: '',
       }
 );
 

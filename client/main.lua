@@ -68,10 +68,10 @@ end)
 
 local function openMDT()
     ---@type boolean?, string?
-    local isAuthorised, callSign = lib.callback.await('ox_mdt:openMDT', 500)
+    local isAuthorised = lib.callback.await('ox_mdt:openMDT', 500)
 
     if not isAuthorised then return end
-
+    local callSign = isAuthorised
     isMdtOpen = true
 
     if not IsEntityPlayingAnim(cache.ped, tabletAnimDict, 'base', 3) then
@@ -110,7 +110,7 @@ local function openMDT()
     player.unit = LocalPlayer.state.mdtUnitId
     player.callSign = callSign
     player.group = framework.getGroupInfo()
-
+    player.image = lib.callback.await('ox_mdt:getProfileImage')
     SendNUIMessage({
         action = 'setVisible',
         data = player

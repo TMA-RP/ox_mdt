@@ -21,7 +21,7 @@ const NavCharacter: React.FC = () => {
         <Avatar color="blue" radius="md" src={character.image} />
         <Stack spacing={0} sx={{ overflow: 'hidden' }}>
           <Text truncate color="dark.0">
-            {character.firstName} {character.lastName}
+            {character.firstName} {character.lastName} · {character.callSign}
           </Text>
           <Text truncate size="xs" color="dark.2">
             {character.title}

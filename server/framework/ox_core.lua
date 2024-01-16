@@ -133,7 +133,7 @@ end
 ---@return table<string, { label: string } | string>[]
 function ox.getLicenses(parameters)
     local licenses = MySQL.rawExecute.await(
-        'SELECT ox_licenses.label, `issued` FROM character_licenses LEFT JOIN ox_licenses ON ox_licenses.name = character_licenses.name WHERE `charid` = ?',
+        'SELECT ox_licenses.label, DATE_FORMAT(`issued`, "%d/%m/%Y") as issued FROM character_licenses LEFT JOIN ox_licenses ON ox_licenses.name = character_licenses.name WHERE `charid` = ?',
         parameters) or {}
 
     return licenses
@@ -518,5 +518,13 @@ registerCallback('ox_mdt:hireOfficer', function(source, stateId)
 
     return success
 end, 'hire_officer')
+
+registerCallback("ox_mdt:getProfileImage", function(source)
+    local player = Ox.GetPlayer(source)
+    if not player then return end
+    local row = MySQL.single.await('SELECT `image` FROM `ox_mdt_profiles` WHERE `stateId` = ?', { player.stateId })
+    if not row then return end
+    return row.image
+end)
 
 return ox

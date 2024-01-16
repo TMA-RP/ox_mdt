@@ -88,8 +88,8 @@ const MDT: React.FC = () => {
       setLocale(data.locales);
       setProfileCards(data.profileCards);
       setCategoryCharges(data.charges);
-      await import(`../../../node_modules/dayjs/locale/${data.locale}.js`);
-      dayjs.locale(data.locale);
+      //   await import(`../../../node_modules/dayjs/locale/${data.locale}.js`);
+      //   dayjs.locale(data.locale);
     }
   );
 

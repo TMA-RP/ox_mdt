@@ -8,7 +8,9 @@ require 'server.charges'
 require 'server.calls'
 
 registerCallback('ox_mdt:openMDT', function()
-    return officers.get(source) and true
+    local officer = officers.get(source)
+    if not officer then return false end
+    return officer.callSign
 end)
 
 ---@param source number
@@ -33,7 +35,7 @@ end, 'create_announcement')
 ---@param data { announcement: Announcement, value: string }
 registerCallback('ox_mdt:editAnnouncement', function(source, data)
     local officer = officers.get(source)
-    local announcement = db.selectAnnouncement(data.id)
+    local announcement = db.selectAnnouncement(data.announcement.id)
 
     if not officer then return end
 
