@@ -31,7 +31,3 @@ html {
 ::-webkit-scrollbar {
   display: none;
 }
-
-.leaflet-control-attribution {
-  display: none;
-}

@@ -18,6 +18,8 @@ const Map: React.FC = () => {
 
   map.setView([0, 0], 2);
 
+  map.attributionControl.setPrefix(false);
+
   return null;
 };
 
