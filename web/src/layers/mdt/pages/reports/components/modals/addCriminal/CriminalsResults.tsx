@@ -6,6 +6,7 @@ import { IconUserX } from '@tabler/icons-react';
 import { fetchNui } from '../../../../../../../utils/fetchNui';
 import NotFound from '../../../../../components/NotFound';
 import locales from '../../../../../../../locales';
+import { getImage } from '../../../../../../../utils/misc';
 
 const useStyles = createStyles((theme) => ({
   profileContainer: {
@@ -54,7 +55,7 @@ const CriminalsResults: React.FC = () => {
                 ]);
               }}
             >
-              <Avatar variant="light" color="blue" size="lg" src={profile.image} />
+              <Avatar variant="light" color="blue" size="lg" src={getImage(profile.image, profile.mugshot)} />
               <Stack spacing={0}>
                 <Text>
                   {profile.firstName} {profile.lastName}

@@ -7,6 +7,7 @@ import locales from '../../../../../locales';
 import RosterOfficerMenu from './RosterOfficerMenu';
 import { useRosterRecordsState } from '../../../../../state/roster';
 import { useIsRosterDebouncing, useRosterSearchDebouncedValue } from '../../../../../state/roster/tableSearch';
+import { getImage } from '../../../../../utils/misc';
 
 const DEBUG_DATA: RosterOfficer[] = [
   {
@@ -46,7 +47,7 @@ const COLUMNS: DataTableColumn<RosterOfficer>[] = [
     accessor: 'image',
     title: '',
     render: (record) => {
-      return <Avatar color="blue" radius="md" size="lg" src={record.image} />;
+      return <Avatar color="blue" radius="md" size="lg" src={getImage(record.image, record.mugshot)} />;
     },
   },
   {

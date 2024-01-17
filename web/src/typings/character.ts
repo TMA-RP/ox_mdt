@@ -8,4 +8,5 @@ export interface Character {
   image?: string;
   callSign: string;
   unit?: number;
+  mugshot?: string;
 }

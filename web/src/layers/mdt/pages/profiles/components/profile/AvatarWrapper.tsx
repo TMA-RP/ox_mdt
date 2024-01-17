@@ -6,6 +6,7 @@ import { modals } from '@mantine/modals';
 import AvatarModal from '../modals/AvatarModal';
 import locales from '../../../../../../locales';
 import { hasPermission } from '../../../../../../helpers';
+import { getImage } from '../../../../../../utils/misc';
 
 const useStyles = createStyles({
   container: {
@@ -47,7 +48,7 @@ const AvatarWrapper: React.FC = () => {
           <IconEdit />
         </ActionIcon>
       )}
-      <Avatar color="blue" radius="md" src={profile?.image} w="100%" h="100%" />
+      <Avatar color="blue" radius="md" src={getImage(profile?.image, profile?.mugshot)} w="100%" h="100%" />
     </Box>
   );
 };

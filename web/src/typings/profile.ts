@@ -16,6 +16,7 @@ export interface PartialProfileData {
   dob: number;
   stateId: string;
   image?: string;
+  mugshot?: string;
 }
 
 export interface CustomProfileData {

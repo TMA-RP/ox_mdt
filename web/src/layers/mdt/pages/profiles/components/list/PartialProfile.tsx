@@ -5,6 +5,7 @@ import { DEBUG_PROFILE, useSetProfile } from '../../../../../../state';
 import locales from '../../../../../../locales';
 import { Avatar, Box, createStyles, Group, Stack, Text } from '@mantine/core';
 import { useSetLoader } from '../../../../../../state/loader';
+import { getImage } from '../../../../../../utils/misc';
 import dayjs from 'dayjs';
 
 const useStyles = createStyles((theme) => ({
@@ -48,7 +49,7 @@ const PartialProfile: React.ForwardRefRenderFunction<HTMLDivElement | null, Prop
       }}
     >
       <Group>
-        <Avatar color="blue" radius="md" size="lg" src={profile.image} />
+        <Avatar color="blue" radius="md" size="lg" src={getImage(profile.image, profile.mugshot)} />
         <Stack spacing={0}>
           <Text size="sm">
             {profile.firstName} {profile.lastName}

@@ -11,6 +11,7 @@ import { useCharacter } from '../../../../../../../state';
 import { fetchNui } from '../../../../../../../utils/fetchNui';
 import CreateBoloModal from '../modals/CreateBoloModal';
 import { queryClient } from '../../../../../../../main';
+import { getImage } from '../../../../../../../utils/misc';
 
 interface Props {
   bolo: BOLO;
@@ -40,7 +41,7 @@ const BoloCard: React.ForwardRefRenderFunction<HTMLDivElement, Props> = ({ bolo 
     <Stack className={classes.container} ref={ref}>
       <Group position="apart">
         <Group h="100%">
-          <Avatar variant="light" color="blue" src={bolo.image} />
+          <Avatar variant="light" color="blue" src={getImage(bolo.image, bolo.mugshot)} />
           <Stack spacing={0} align="start">
             <Text c="dark.0" size="md" weight={500}>{`${bolo.firstName} ${bolo.lastName} · ${bolo.callSign}`}</Text>
             <Text c="dark.2" size="xs">

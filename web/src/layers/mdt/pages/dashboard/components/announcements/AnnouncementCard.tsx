@@ -10,6 +10,7 @@ import { queryClient } from '../../../../../../main';
 import locales from '../../../../../../locales';
 import { hasPermission } from '../../../../../../helpers';
 import ReadOnlyEditor from '../../../../components/ReadOnlyEditor';
+import { getImage } from '../../../../../../utils/misc';
 
 const useStyles = createStyles((theme) => ({
   announcementContainer: {
@@ -36,11 +37,10 @@ const AnnouncementCard: React.ForwardRefRenderFunction<HTMLDivElement | null, Pr
     <Stack className={classes.announcementContainer} p="md" ref={ref}>
       <Group position="apart">
         <Group>
-          <Avatar color="blue" src={announcement.image} />
+          <Avatar color="blue" src={getImage(announcement.image, announcement.mugshot)} />
           <Stack spacing={0}>
-            <Text fw={500}>{`${announcement.firstName} ${announcement.lastName} ${
-              announcement.callSign ? `· ${announcement.callSign}` : ''
-            }`}</Text>
+            <Text fw={500}>{`${announcement.firstName} ${announcement.lastName} ${announcement.callSign ? `· ${announcement.callSign}` : ''
+              }`}</Text>
             <Text size="xs" c="dark.2">
               {dayjs(announcement.createdAt).fromNow()}
             </Text>

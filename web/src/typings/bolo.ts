@@ -4,6 +4,7 @@ export interface BOLO {
   lastName: string;
   stateId: string;
   image?: string;
+  mugshot?: string;
   callSign: string;
   contents: string;
   createdAt: number;

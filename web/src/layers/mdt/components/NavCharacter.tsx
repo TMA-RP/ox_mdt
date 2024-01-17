@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCharacter } from '../../../state';
 import { Avatar, Box, createStyles, Group, Stack, Text } from '@mantine/core';
+import { getImage } from '../../../utils/misc';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -18,7 +19,7 @@ const NavCharacter: React.FC = () => {
   return (
     <Box className={classes.container}>
       <Group noWrap>
-        <Avatar color="blue" radius="md" src={character.image} />
+        <Avatar color="blue" radius="md" src={getImage(character.image, character.mugshot)} />
         <Stack spacing={0} sx={{ overflow: 'hidden' }}>
           <Text truncate color="dark.0">
             {character.firstName} {character.lastName} · {character.callSign}

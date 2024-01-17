@@ -8,7 +8,7 @@ import { fetchNui } from '../../../../../../utils/fetchNui';
 import { useNavigate } from 'react-router-dom';
 import { useSetActiveReport, useSetIsReportActive } from '../../../../../../state';
 import { Report } from '../../../../../../typings';
-import { isEnvBrowser } from '../../../../../../utils/misc';
+import { isEnvBrowser, getImage } from '../../../../../../utils/misc';
 
 interface Props {
   warrant: Warrant;
@@ -49,7 +49,7 @@ const WarrantCard: React.FC<Props> = ({ warrant }) => {
       }}
     >
       <Group>
-        <Avatar size="xl" color="blue" radius="md" src={warrant.image} />
+        <Avatar size="xl" color="blue" radius="md" src={getImage(warrant.image, warrant.mugshot)} />
         <Stack spacing={0} h="100%">
           <Text>
             {warrant.firstName} {warrant.lastName}

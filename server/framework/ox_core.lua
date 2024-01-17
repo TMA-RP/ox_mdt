@@ -169,7 +169,8 @@ local selectOfficers = [[
         character_groups.name AS `group`,
         character_groups.grade,
         ox_mdt_profiles.image,
-        ox_mdt_profiles.callSign
+        ox_mdt_profiles.callSign,
+        JSON_UNQUOTE(JSON_EXTRACT(characters.data, '$.mugshot')) as mugshot
     FROM
         character_groups
     LEFT JOIN
@@ -224,7 +225,8 @@ local selectWarrants = [[
         characters.firstName,
         characters.lastName,
         profiles.image,
-        DATE_FORMAT(warrants.expiresAt, "%Y-%m-%d %T") AS expiresAt
+        DATE_FORMAT(warrants.expiresAt, "%Y-%m-%d %T") AS expiresAt,
+        JSON_UNQUOTE(JSON_EXTRACT(characters.data, '$.mugshot')) as mugshot
     FROM
         `ox_mdt_warrants` warrants
     LEFT JOIN
@@ -252,7 +254,8 @@ local selectProfiles = [[
         characters.firstName,
         characters.lastName,
         DATE_FORMAT(characters.dateofbirth, "%Y-%m-%d") AS dob,
-        profile.image
+        profile.image,
+        JSON_UNQUOTE(JSON_EXTRACT(characters.data, '$.mugshot')) as mugshot
     FROM
         characters
     LEFT JOIN
@@ -368,7 +371,8 @@ function ox.getCharacterProfile(parameters)
             DATE_FORMAT(a.dateofbirth, "%Y-%m-%d") AS dob,
             a.phoneNumber,
             b.image,
-            b.notes
+            b.notes,
+            JSON_UNQUOTE(JSON_EXTRACT(a.data, '$.mugshot')) as mugshot
         FROM
             `characters` a
         LEFT JOIN
@@ -394,7 +398,8 @@ function ox.getAnnouncements(parameters)
             b.lastName,
             c.image,
             c.callSign,
-            DATE_FORMAT(a.createdAt, "%Y-%m-%d %T") AS createdAt
+            DATE_FORMAT(a.createdAt, "%Y-%m-%d %T") AS createdAt,
+            JSON_UNQUOTE(JSON_EXTRACT(b.data, '$.mugshot')) as mugshot
         FROM
             `ox_mdt_announcements` a
         LEFT JOIN
@@ -419,6 +424,7 @@ function ox.getBOLOs(parameters)
             b.image,
             c.firstName,
             c.lastName,
+            JSON_UNQUOTE(JSON_EXTRACT(c.data, '$.mugshot')) as mugshot,
             JSON_ARRAYAGG(d.image) AS images,
             DATE_FORMAT(a.createdAt, "%Y-%m-%d %T") AS createdAt
         FROM
@@ -522,9 +528,14 @@ end, 'hire_officer')
 registerCallback("ox_mdt:getProfileImage", function(source)
     local player = Ox.GetPlayer(source)
     if not player then return end
-    local row = MySQL.single.await('SELECT `image` FROM `ox_mdt_profiles` WHERE `stateId` = ?', { player.stateId })
+    local row = MySQL.single.await([[
+        SELECT p.`image`, JSON_UNQUOTE(JSON_EXTRACT(c.`data`, '$.mugshot')) as mugshot
+        FROM `ox_mdt_profiles` p
+        LEFT JOIN `characters` c ON p.`stateId` = c.`stateId`
+        WHERE p.`stateId` = ?
+    ]], { player.stateId })
     if not row then return end
-    return row.image
+    return row
 end)
 
 return ox

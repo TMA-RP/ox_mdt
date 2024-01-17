@@ -5,4 +5,5 @@ export interface Warrant {
   reportId: number;
   expiresAt: number;
   image?: string;
+  mugshot?: string;
 }
