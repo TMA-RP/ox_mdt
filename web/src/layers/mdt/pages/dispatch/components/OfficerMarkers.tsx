@@ -12,7 +12,10 @@ import { gameToMap } from './Map';
 
 const useStyles = createStyles((theme) => ({
   icon: {
-    color: "#1186C5",
+    backgroundColor: "#1953ab",
+    color: "transparent",
+    border: "2px solid #FFF",
+    borderRadius: "50%"
   },
 }));
 
