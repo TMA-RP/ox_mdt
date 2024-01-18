@@ -12,7 +12,7 @@ import { gameToMap } from './Map';
 
 const useStyles = createStyles((theme) => ({
   icon: {
-    color: "#fcdb03",
+    color: "#1186C5",
   },
 }));
 
