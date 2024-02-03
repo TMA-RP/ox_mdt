@@ -529,10 +529,10 @@ registerCallback("ox_mdt:getProfileImage", function(source)
     local player = Ox.GetPlayer(source)
     if not player then return end
     local row = MySQL.single.await([[
-        SELECT p.`image`, JSON_UNQUOTE(JSON_EXTRACT(c.`data`, '$.mugshot')) as mugshot
-        FROM `ox_mdt_profiles` p
-        LEFT JOIN `characters` c ON p.`stateId` = c.`stateId`
-        WHERE p.`stateId` = ?
+        SELECT JSON_UNQUOTE(JSON_EXTRACT(c.`data`, '$.mugshot')) as mugshot, p.`image` as image
+        FROM `characters` c
+        LEFT JOIN `ox_mdt_profiles` p ON c.`stateId` = p.`stateId`
+        WHERE c.`stateId` = ?
     ]], { player.stateId })
     if not row then return end
     return row

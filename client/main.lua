@@ -110,9 +110,11 @@ local function openMDT()
     player.unit = LocalPlayer.state.mdtUnitId
     player.callSign = callSign
     player.group = framework.getGroupInfo()
-    local images = lib.callback.await('ox_mdt:getProfileImage')
-    player.image = images.image
-    player.mugshot = images.mugshot
+    local images = lib.callback.await('ox_mdt:getProfileImage', false)
+    if images then
+        player.image = images.image
+        player.mugshot = images.mugshot
+    end
     SendNUIMessage({
         action = 'setVisible',
         data = player

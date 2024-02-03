@@ -38,7 +38,7 @@ local function addOfficer(playerId, firstName, lastName, stateId, group, grade)
         firstName = firstName,
         lastName = lastName,
         stateId = stateId,
-        callSign = MySQL.prepare.await('SELECT `callSign` FROM `ox_mdt_profiles` WHERE stateId = ?', { stateId }) --[[@as string?]],
+        callSign = MySQL.prepare.await('SELECT `callSign` FROM `ox_mdt_profiles` WHERE stateId = ?', { stateId }) or "" --[[@as string?]],
         playerId = playerId,
         ped = GetPlayerPed(playerId),
         position = {},
