@@ -28,11 +28,15 @@ local function getGradeLabel(group, grade)
 end
 
 function ox.getGroupInfo()
-    local groupName, grade = player.hasGroup(config.policeGroups)
+    local player = Ox.GetPlayer()
+    if not player then return end
 
-    if not groupName or not grade then return end
-
-    return groupName, grade, getGradeLabel(groupName, grade)
+    for _, groupName in ipairs(config.policeGroups) do
+        local grade = player.getGroup(groupName)
+        if grade then
+            return groupName, grade, getGradeLabel(groupName, grade)
+        end
+    end
 end
 
 ---@param officer Officer
@@ -41,11 +45,12 @@ function ox.getGroupTitle(officer)
 end
 
 function ox.getOfficerData()
+    local player = Ox.GetPlayer()
     if player then
         local group, grade, title = ox.getGroupInfo()
-        localOfficer.stateId = player.stateId
-        localOfficer.firstName = player.firstName
-        localOfficer.lastName = player.lastName
+        localOfficer.stateId = player.get("stateId")
+        localOfficer.firstName = player.get("firstName")
+        localOfficer.lastName = player.get("lastName")
         localOfficer.group = group
         localOfficer.title = title
         localOfficer.grade = grade
