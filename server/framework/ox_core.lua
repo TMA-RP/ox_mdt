@@ -100,8 +100,8 @@ local ox = {}
 ---@return boolean?
 function ox.isAuthorised(playerId, permission, permissionName)
     local player = Ox.GetPlayer(playerId)
-
-    if player?.getGroup('dispatch') then
+    if not player then return false end
+    if player.getGroup('dispatch') then
         local grade = player.getGroup('dispatch')
         if type(permission) == 'table' then
             if not permission.dispatch then return false end
@@ -113,7 +113,7 @@ function ox.isAuthorised(playerId, permission, permissionName)
 
     if type(permission) == 'table' then
         for group, grade in pairs(permission) do
-            local playerGrade = player?.getGroup(group)
+            local playerGrade = player.getGroup(group)
             if playerGrade and playerGrade >= grade then
                 return true
             end
@@ -524,7 +524,7 @@ registerCallback('ox_mdt:hireOfficer', function(source, stateId)
 
     if player then
         for _, group in ipairs(config.policeGroups) do
-            if player.getGroup(group) then return false
+            if player.getGroup(group) then return false end
         end
 
         player.setGroup('police', 1)
@@ -546,7 +546,7 @@ registerCallback("ox_mdt:getProfileImage", function(source)
         FROM `characters` c
         LEFT JOIN `ox_mdt_profiles` p ON c.`stateId` = p.`stateId`
         WHERE c.`stateId` = ?
-    ]], { player.stateId })
+    ]], { player.get("stateId") })
     if not row then return end
     return row
 end)
