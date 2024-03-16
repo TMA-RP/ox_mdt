@@ -36,13 +36,13 @@ end)
 local function addOfficer(playerId)
     local player = Ox.GetPlayer(playerId)
 
-    if not player then return end
+    if not player or not player.charId then return end
     if not player.get("inDuty") then return end
 
     for _, groupName in ipairs(config.policeGroups) do
         local grade = player.getGroup(groupName)
         if grade then
-            officers.add(playerId, player.get("firstName"), player.get("lastName"), player.get("stateId"), groupName, grade)
+            officers.add(playerId, player.get("firstName"), player.get("lastName"), player.stateId, groupName, grade)
             return
         end
     end
@@ -100,7 +100,7 @@ local ox = {}
 ---@return boolean?
 function ox.isAuthorised(playerId, permission, permissionName)
     local player = Ox.GetPlayer(playerId)
-    if not player then return false end
+    if not player or not player.charId then return false end
     if player.getGroup('dispatch') then
         local grade = player.getGroup('dispatch')
         if type(permission) == 'table' then
@@ -540,13 +540,13 @@ end, 'hire_officer')
 
 registerCallback("ox_mdt:getProfileImage", function(source)
     local player = Ox.GetPlayer(source)
-    if not player then return end
+    if not player or not player.charId then return end
     local row = MySQL.single.await([[
         SELECT JSON_UNQUOTE(JSON_EXTRACT(c.`data`, '$.mugshot')) as mugshot, p.`image` as image
         FROM `characters` c
         LEFT JOIN `ox_mdt_profiles` p ON c.`stateId` = p.`stateId`
         WHERE c.`stateId` = ?
-    ]], { player.get("stateId") })
+    ]], { player.stateId })
     if not row then return end
     return row
 end)

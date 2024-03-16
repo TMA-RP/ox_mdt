@@ -29,7 +29,7 @@ end
 
 function ox.getGroupInfo()
     local player = Ox.GetPlayer()
-    if not player then return end
+    if not player or not player.charId then return end
 
     for _, groupName in ipairs(config.policeGroups) do
         local grade = player.getGroup(groupName)
@@ -48,7 +48,7 @@ function ox.getOfficerData()
     local player = Ox.GetPlayer()
     if player then
         local group, grade, title = ox.getGroupInfo()
-        localOfficer.stateId = player.get("stateId")
+        localOfficer.stateId = player.stateId
         localOfficer.firstName = player.get("firstName")
         localOfficer.lastName = player.get("lastName")
         localOfficer.group = group
