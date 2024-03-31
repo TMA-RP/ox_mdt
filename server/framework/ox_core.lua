@@ -144,7 +144,7 @@ end
 ---@return table<string, { label: string } | string>[]
 function ox.getLicenses(parameters)
     local licenses = MySQL.rawExecute.await(
-        'SELECT ox_licenses.label, DATE_FORMAT(`issued`, "%d/%m/%Y") as issued FROM character_licenses LEFT JOIN ox_licenses ON ox_licenses.name = character_licenses.name WHERE `charid` = ?',
+        'SELECT ox_licenses.label, DATE_FORMAT(FROM_UNIXTIME(JSON_EXTRACT(character_licenses.data, "$.issued") / 1000), "%d/%m/%Y") as issued FROM character_licenses LEFT JOIN ox_licenses ON ox_licenses.name = character_licenses.name WHERE `charid` = ?',
         parameters) or {}
 
     return licenses
