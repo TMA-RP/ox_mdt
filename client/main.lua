@@ -127,7 +127,7 @@ exports('openMDT', openMDT)
 
 lib.addKeybind({
     defaultKey = 'm',
-    description = 'Open the Police MDT',
+    description = 'Police - Ouvrir le MDT',
     name = 'openMDT',
     onPressed = openMDT
 })
@@ -136,7 +136,7 @@ local callsAreFocused = false
 
 lib.addKeybind({
     defaultKey = 'GRAVE',
-    description = 'Toggle MDT calls focus',
+    description = 'Police - Interraction avec les appels',
     name = 'focusCalls',
     onPressed = function()
         if callsAreFocused or IsNuiFocused() or IsPauseMenuActive() then return end
