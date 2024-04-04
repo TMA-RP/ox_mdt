@@ -32,7 +32,7 @@ function ox.getGroupInfo()
     if not player or not player.charId then return end
 
     for _, groupName in ipairs(config.policeGroups) do
-        local grade = player.getGroup(groupName)
+        local _, grade = player.getGroup(groupName)
         if grade then
             return groupName, grade, getGradeLabel(groupName, grade)
         end

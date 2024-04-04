@@ -119,10 +119,9 @@ function ox.isAuthorised(playerId, permission, permissionName)
             end
         end
     end
-
-    for _, group in ipairs(config.policeGroups) do
-        local grade = player?.getGroup(group)
-        if grade and grade >= permission then
+    local groups = player?.getGroups(config.policeGroups)
+    for _, grade in pairs(groups) do
+        if grade >= permission then
             return true
         end
     end
