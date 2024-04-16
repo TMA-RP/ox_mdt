@@ -77,6 +77,7 @@ local function openMDT()
     if not IsEntityPlayingAnim(cache.ped, tabletAnimDict, 'base', 3) then
         lib.requestAnimDict(tabletAnimDict, false)
         TaskPlayAnim(cache.ped, tabletAnimDict, 'base', 6.0, 3.0, -1, 49, 1.0, false, false, false)
+        RemoveAnimDict(tabletAnimDict)
     end
 
     if not tablet then
