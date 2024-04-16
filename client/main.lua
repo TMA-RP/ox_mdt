@@ -87,6 +87,7 @@ local function openMDT()
         local coords = GetEntityCoords(cache.ped)
         tablet = CreateObject(model, coords.x, coords.y, coords.z, true, true, true)
         AttachEntityToEntity(tablet, cache.ped, GetPedBoneIndex(cache.ped, 28422), 0.0, 0.0, 0.03, 0.0, 0.0, 0.0, true, true, false, true, 0, true)
+        SetModelAsNoLongerNeeded(model)
     end
 
     if not hasLoadedUi then
