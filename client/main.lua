@@ -75,13 +75,13 @@ local function openMDT()
     isMdtOpen = true
 
     if not IsEntityPlayingAnim(cache.ped, tabletAnimDict, 'base', 3) then
-        lib.requestAnimDict(tabletAnimDict, false)
+        lib.requestAnimDict(tabletAnimDict)
         TaskPlayAnim(cache.ped, tabletAnimDict, 'base', 6.0, 3.0, -1, 49, 1.0, false, false, false)
         RemoveAnimDict(tabletAnimDict)
     end
 
     if not tablet then
-        local model = lib.requestModel(`tma_tablet_mdt`, false)
+        local model = lib.requestModel(`tma_tablet_mdt`)
 
         if not model then return end
 
