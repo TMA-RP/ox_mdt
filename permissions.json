@@ -1,30 +1,77 @@
 {
-  "create_announcement": 2,
-  "delete_announcement": {
-    "police": 4
-  },
-  "create_bolo": 3,
-  "delete_bolo": 3,
-  "change_profile_picture": 2,
-  "edit_profile_notes": 2,
-  "create_report": 1,
-  "delete_report": 3,
-  "edit_report_contents": 2,
-  "edit_report_title": 2,
-  "add_criminal": 1,
-  "remove_criminal": 2,
-  "save_criminal": 1,
-  "add_officer_involved": 1,
-  "add_evidence": 1,
-  "remove_officer_involved": 2,
-  "remove_evidence": 2,
-  "create_unit": 2,
-  "mark_call_completed": {
-    "police": 2,
-    "dispatch": 1
-  },
-  "set_call_sign": 4,
-  "set_officer_rank": 4,
-  "fire_officer": 5,
-  "hire_officer": 4
+    "create_announcement": {
+        "police": 6,
+        "lawyer": 2
+    },
+    "delete_announcement": {
+        "police": 6,
+        "lawyer": 2
+    },
+    "create_bolo": {
+        "lawyer": 3
+    },
+    "delete_bolo": {
+        "lawyer": 3
+    },
+    "change_profile_picture": {
+        "police": 1
+    },
+    "edit_profile_notes": {
+        "police": 1,
+        "lawyer": 2
+    },
+    "create_report": {
+        "police": 2
+    },
+    "delete_report": {
+        "police": 7
+    },
+    "edit_report_contents": {
+        "police": 6
+    },
+    "edit_report_title": {
+        "police": 6
+    },
+    "add_criminal": {
+        "police": 3
+    },
+    "remove_criminal": {
+        "police": 3
+    },
+    "save_criminal": {
+        "police": 3
+    },
+    "add_officer_involved": {
+        "police": 3
+    },
+    "add_evidence": {
+        "police": 2
+    },
+    "remove_officer_involved": {
+        "police": 3
+    },
+    "remove_evidence": {
+        "police": 6
+    },
+    "create_unit": {
+        "police": 2
+    },
+    "mark_call_completed": {
+        "police": 2
+    },
+    "set_call_sign": {
+        "police": 7
+    },
+    "set_officer_rank": {
+        "police": 4,
+        "lawyer": 2
+    },
+    "fire_officer": {
+        "police": 4,
+        "lawyer": 2
+    },
+    "hire_officer": {
+        "police": 4,
+        "lawyer": 2
+    }
 }
