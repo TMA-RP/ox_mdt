@@ -60,7 +60,7 @@ createProfileCard({
       local licenseLabels = {}
 
       for i = 1, #licenses do
-        licenseLabels[#licenseLabels + 1] = ("%s Délivré le %s"):format(licenses[i].label, licenses[i].issued)
+        licenseLabels[#licenseLabels + 1] = ("%s Délivré le %s (%s)"):format(licenses[i].label, licenses[i].issued, licenses[i].confiscated == "true" and 'Confisqué' or 'Actif')
       end
 
       return licenseLabels

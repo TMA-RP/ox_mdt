@@ -143,7 +143,7 @@ end
 ---@return table<string, { label: string } | string>[]
 function ox.getLicenses(parameters)
     local licenses = MySQL.rawExecute.await(
-        'SELECT ox_licenses.label, DATE_FORMAT(FROM_UNIXTIME(JSON_EXTRACT(character_licenses.data, "$.issued") / 1000), "%d/%m/%Y") as issued FROM character_licenses LEFT JOIN ox_licenses ON ox_licenses.name = character_licenses.name WHERE `charid` = ?',
+        'SELECT ox_licenses.label, DATE_FORMAT(FROM_UNIXTIME(JSON_EXTRACT(character_licenses.data, "$.issued") / 1000), "%d/%m/%Y") as issued, CASE WHEN IFNULL(JSON_EXTRACT(characters.data, "$.licenseConfiscated"), "false") = "true" THEN "true" ELSE "false" END as confiscated FROM character_licenses LEFT JOIN ox_licenses ON ox_licenses.name = character_licenses.name LEFT JOIN characters ON characters.charId = character_licenses.charid WHERE character_licenses.charid = ?',
         parameters) or {}
 
     return licenses
