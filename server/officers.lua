@@ -15,12 +15,14 @@ SetInterval(function()
     local n = 0
 
     for _, officer in pairs(activeOfficers) do
-        local coords = GetEntityCoords(officer.ped)
-        officer.position[1] = coords.x
-        officer.position[2] = coords.y
-        officer.position[3] = coords.z
-        n += 1
-        officersArray[n] = officer
+        if officer.group ~= 'lawyer' then
+            local coords = GetEntityCoords(officer.ped)
+            officer.position[1] = coords.x
+            officer.position[2] = coords.y
+            officer.position[3] = coords.z
+            n += 1
+            officersArray[n] = officer
+        end
     end
 
     triggerOfficerEvent('ox_mdt:updateOfficerPositions', officersArray)
