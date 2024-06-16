@@ -33,7 +33,7 @@ const CallsList: React.FC = () => {
 
   return (
     <Stack sx={{ overflowY: 'scroll', flex: '1 1 0' }}>
-      {calls.map((call) => (
+      {[...calls].reverse().map((call) => (
         <CallCard key={call.id} call={call} />
       ))}
     </Stack>

@@ -108,7 +108,7 @@ local function openMDT()
 
         hasLoadedUi = true
     end
-
+    player = framework.getOfficerData()
     player.unit = LocalPlayer.state.mdtUnitId
     player.callSign = callSign
     player.group = framework.getGroupInfo()

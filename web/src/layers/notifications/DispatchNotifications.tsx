@@ -51,7 +51,7 @@ const DispatchNotifications: React.FC = () => {
     queryClient.setQueriesData<Call[]>(['calls'], (oldData) => {
       if (!oldData) return;
 
-      return [data, ...oldData];
+      return [...oldData, data];
     });
   });
 
