@@ -37,10 +37,11 @@ local function addOfficer(playerId)
     local player = Ox.GetPlayer(playerId)
 
     if not player or not player.charId then return end
-    if not player.get("inDuty") then return end
-
     for _, groupName in ipairs(config.policeGroups) do
         local grade = player.getGroup(groupName)
+        if groupName == 'lawyer' and grade == 1 then return end
+        if groupName ~= 'lawyer' and not player.get("inDuty") then return end
+
         if grade then
             officers.add(playerId, player.get("firstName"), player.get("lastName"), player.stateId, groupName, grade)
             return
