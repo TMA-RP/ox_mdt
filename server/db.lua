@@ -20,6 +20,24 @@ function db.selectReportById(id)
     return MySQL.prepare.await('SELECT `id`, `title`, `description` FROM `ox_mdt_reports` WHERE `id` = ?', { id }) --[[@as MySQLRow]]
 end
 
+function db.selectLawyers()
+    local query = [[
+        SELECT cg.charId, c.firstName, c.lastName
+        FROM character_groups AS cg
+        JOIN characters AS c ON cg.charId = c.charId
+        WHERE cg.name = 'lawyer' AND cg.grade = 1
+    ]]
+    return MySQL.rawExecute.await(query)
+end
+
+function db.sendToLawyer(charId, reportId)
+    local query = [[
+        INSERT IGNORE INTO `ceeb_doj` (`charId`, `reportId`)
+        VALUES (?, ?)
+    ]]
+    return MySQL.prepare.await(query, { charId, reportId })
+end
+
 local selectReports = 'SELECT `id`, `title`, `author`, DATE_FORMAT(`date`, "%Y-%m-%d %T") as date FROM `ox_mdt_reports`'
 local selectReportsById = selectReports .. 'WHERE `id` = ?'
 
@@ -110,7 +128,6 @@ function db.selectCriminalsInvolved(reportId)
 
         for _, charge in pairs(charges) do
             if charge.label and charge.stateId == criminal.stateId then
-
                 charge.stateId = nil
                 criminal.penalty.time += charge.time or 0
                 criminal.penalty.fine += charge.fine or 0
@@ -138,7 +155,7 @@ end
 ---@param criminal Criminal
 function db.saveCriminal(reportId, criminal)
     local queries = {
-        { 'DELETE FROM `ox_mdt_reports_charges` WHERE `reportid` = ? AND `stateId` = ?', { reportId, criminal.stateId } },
+        { 'DELETE FROM `ox_mdt_reports_charges` WHERE `reportid` = ? AND `stateId` = ?',                                                                   { reportId, criminal.stateId } },
         { 'UPDATE IGNORE `ox_mdt_reports_criminals` SET `warrantExpiry` = ?, `processed` = ?, `pleadedGuilty` = ? WHERE `reportid` = ? AND `stateId` = ?', { criminal.issueWarrant and criminal.warrantExpiry or nil, criminal.processed, criminal.pleadedGuilty, reportId, criminal.stateId } },
     }
     local queryN = #queries
@@ -286,7 +303,7 @@ function db.updateBOLO(id, contents, images)
     local queries = {
         { 'DELETE FROM `ox_mdt_bolos_images` where `boloId` = ? ', { id } },
     }
-    
+
     local queryN = #queries
 
     for i = 1, #images do

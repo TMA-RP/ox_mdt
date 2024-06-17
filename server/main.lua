@@ -55,6 +55,14 @@ registerCallback('ox_mdt:deleteAnnouncement', function(source, id)
     return db.removeAnnouncement(id)
 end, 'delete_announcement')
 
+registerCallback('ox_mdt:getLawyers', function()
+    return db.selectLawyers()
+end)
+
+registerCallback('ox_mdt:sendToLawyer', function(source, data)
+    return db.sendToLawyer(data.charId, data.reportId)
+end)
+
 ---@param source number
 ---@param page number
 registerCallback('ox_mdt:getBOLOs', function(source, page)

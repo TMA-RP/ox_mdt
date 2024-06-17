@@ -1,9 +1,10 @@
 import React from 'react';
 import { ActionIcon, Group, Text, Tooltip } from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconEdit, IconTrash, IconShare } from '@tabler/icons-react';
 import { useCharacter, useReportId, useReportTitle, useSetIsReportActive } from '../../../../../../state';
 import { modals } from '@mantine/modals';
 import EditTitleModal from '../modals/EditTitleModal';
+import SendToLawyer from '../modals/SendToLawyer';
 import { fetchNui } from '../../../../../../utils/fetchNui';
 import { queryClient } from '../../../../../../main';
 import locales from '../../../../../../locales';
@@ -66,6 +67,22 @@ const ReportTitle: React.FC = () => {
             }
           >
             <IconEdit size={20} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Envoyer à un avocat">
+          <ActionIcon
+            color="blue"
+            variant="light"
+            disabled={!hasPermission(character, 'create_announcement')}
+            onClick={() =>
+              modals.open({
+                title: "Choisir un avocat",
+                size: 'sm',
+                children: <SendToLawyer />,
+              })
+            }
+          >
+            <IconShare size={20} />
           </ActionIcon>
         </Tooltip>
       </Group>

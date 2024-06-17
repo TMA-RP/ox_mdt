@@ -277,6 +277,8 @@ serverNuiCallback('fetchRoster', function(data, cb)
     cb(data)
 end)
 
+serverNuiCallback('getLawyers')
+serverNuiCallback('sendToLawyer')
 
 ---@param data table
 ---@param cb function

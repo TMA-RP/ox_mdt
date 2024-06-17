@@ -33,13 +33,16 @@
         "police": 6
     },
     "add_criminal": {
-        "police": 3
+        "police": 3,
+        "lawyer": 3
     },
     "remove_criminal": {
-        "police": 3
+        "police": 3,
+        "lawyer": 3
     },
     "save_criminal": {
-        "police": 3
+        "police": 3,
+        "lawyer": 3
     },
     "add_officer_involved": {
         "police": 3
