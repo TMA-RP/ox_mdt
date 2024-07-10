@@ -174,8 +174,8 @@ end
 local selectOfficers = [[
     SELECT
         ox_mdt_profiles.id,
-        firstName,
-        lastName,
+        characters.firstName,
+        characters.lastName,
         characters.stateId,
         character_groups.name AS `group`,
         character_groups.grade,
@@ -193,10 +193,10 @@ local selectOfficers = [[
     ON
         characters.stateId = ox_mdt_profiles.stateId
     WHERE
-        character_groups.name IN ("police", "dispatch")
+        character_groups.name IN ("police")
 ]]
 
-local selectOfficersFilter = selectOfficers .. ' AND MATCH (characters.stateId, `firstName`, `lastName`) AGAINST (? IN BOOLEAN MODE)'
+local selectOfficersFilter = selectOfficers .. ' AND MATCH (characters.stateId, characters.firstName, characters.lastName) AGAINST (? IN BOOLEAN MODE)'
 local selectOfficersPaginate = selectOfficers .. 'LIMIT 9 OFFSET ?'
 local selectOfficersFilterPaginate = selectOfficersFilter .. ' LIMIT 9 OFFSET ?'
 local selectOfficersCount = selectOfficers:gsub('SELECT.-FROM', 'SELECT COUNT(*) FROM')
@@ -215,7 +215,7 @@ registerCallback('ox_mdt:fetchRoster', function(source, data)
     if data.search == '' then
         return {
             totalRecords = MySQL.prepare.await(selectOfficersCount),
-            officers = MySQL.rawExecute.await(selectOfficersPaginate, { data.page - 1 })
+            officers = MySQL.rawExecute.await(selectOfficersPaginate, { (data.page - 1) * 9 })
         }
     end
 
@@ -226,7 +226,7 @@ registerCallback('ox_mdt:fetchRoster', function(source, data)
             totalRecords = #response,
             officers = response,
         }
-    end, data.search, data.page - 1)
+    end, data.search, (data.page - 1) * 9)
 end)
 
 local selectWarrants = [[
