@@ -43,7 +43,9 @@ local function addOfficer(playerId)
         if groupName ~= 'lawyer' and not player.get("inDuty") then return end
 
         if grade then
-            officers.add(playerId, player.get("firstName"), player.get("lastName"), player.stateId, groupName, grade)
+            if not officers.get(playerId) then
+                officers.add(playerId, player.get("firstName"), player.get("lastName"), player.stateId, groupName, grade)
+            end
             return
         end
     end
@@ -76,6 +78,13 @@ AddEventHandler('ox:setGroup', function(playerId, name, grade)
 end)
 
 AddEventHandler('ceeb_duty:changePlayerState', function(playerId, inDuty)
+    local player = Ox.GetPlayer(playerId)
+    if not player or not player.charId then return end
+    local jobName, jobGrade = player.getGroupByType("job")
+    if jobName == "lawyer" then
+        addOfficer(playerId)
+        return
+    end
     if inDuty then
         addOfficer(playerId)
     else
