@@ -203,12 +203,10 @@ local selectOfficers = [[
         characters.stateId = ox_mdt_profiles.stateId
     WHERE
         character_groups.name IN ("police")
-    ORDER BY
-        character_groups.grade DESC
 ]]
 
-local selectOfficersFilter = selectOfficers .. ' AND MATCH (characters.stateId, characters.firstName, characters.lastName) AGAINST (? IN BOOLEAN MODE)'
-local selectOfficersPaginate = selectOfficers .. 'LIMIT 9 OFFSET ?'
+local selectOfficersFilter = selectOfficers .. ' AND MATCH (characters.stateId, characters.firstName, characters.lastName) AGAINST (? IN BOOLEAN MODE) ORDER BY character_groups.grade DESC'
+local selectOfficersPaginate = selectOfficers .. ' ORDER BY character_groups.grade DESC LIMIT 9 OFFSET ?'
 local selectOfficersFilterPaginate = selectOfficersFilter .. ' LIMIT 9 OFFSET ?'
 local selectOfficersCount = selectOfficers:gsub('SELECT.-FROM', 'SELECT COUNT(*) FROM')
 
