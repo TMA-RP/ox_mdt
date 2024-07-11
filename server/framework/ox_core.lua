@@ -194,6 +194,8 @@ local selectOfficers = [[
         characters.stateId = ox_mdt_profiles.stateId
     WHERE
         character_groups.name IN ("police")
+    ORDER BY
+        character_groups.grade DESC
 ]]
 
 local selectOfficersFilter = selectOfficers .. ' AND MATCH (characters.stateId, characters.firstName, characters.lastName) AGAINST (? IN BOOLEAN MODE)'
