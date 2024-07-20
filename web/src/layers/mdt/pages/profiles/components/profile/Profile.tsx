@@ -10,40 +10,47 @@ import locales from '../../../../../../locales';
 import dayjs from 'dayjs';
 
 const Profile: React.FC = () => {
-  const [profile, setProfile] = useProfileState();
+    const [profile, setProfile] = useProfileState();
 
-  if (!profile) return <></>;
+    if (!profile) return <></>;
 
-  return (
-    <>
-      <AvatarWrapper />
-      <ProfileField icon={IconUser} label={locales.name} value={`${profile.firstName} ${profile.lastName}`} />
-      <SimpleGrid cols={2} spacing={6}>
-        <ProfileField icon={IconId} label={locales.state_id} value={profile.stateId} />
-        <ProfileField
-          icon={IconCalendar}
-          label={locales.date_of_birth}
-          value={dayjs(profile.dob).format('DD/MM/YYYY')}
-        />
-      </SimpleGrid>
-      <Stack spacing="xs" h="100%">
-        <Editor
-          placeholder={locales.profile_notes_placeholder}
-          content={profile.notes}
-          permission="edit_profile_notes"
-          onSave={(value) =>
-            setProfile((prev) => {
-              if (!prev) return null;
+    return (
+        <>
+            <AvatarWrapper />
+            <ProfileField icon={IconUser} label={locales.name} value={`${profile.firstName} ${profile.lastName}`} />
+            <SimpleGrid cols={2} spacing={6}>
+                <ProfileField icon={IconId} label={locales.state_id} value={profile.stateId} />
+                <ProfileField
+                    icon={IconCalendar}
+                    label={locales.date_of_birth}
+                    value={dayjs(profile.dob).format('DD/MM/YYYY')}
+                />
+                {profile.deleted &&
+                    <ProfileField
+                        icon={IconCalendar}
+                        label="Date de décès"
+                        value={dayjs(profile.deleted).format('DD/MM/YYYY')}
+                    />
+                }
+            </SimpleGrid>
+            <Stack spacing="xs" h="100%">
+                <Editor
+                    placeholder={locales.profile_notes_placeholder}
+                    content={profile.notes}
+                    permission="edit_profile_notes"
+                    onSave={(value) =>
+                        setProfile((prev) => {
+                            if (!prev) return null;
 
-              fetchNui('saveProfileNotes', { stateId: prev.stateId, notes: value });
+                            fetchNui('saveProfileNotes', { stateId: prev.stateId, notes: value });
 
-              return { ...prev, notes: value };
-            })
-          }
-        />
-      </Stack>
-    </>
-  );
+                            return { ...prev, notes: value };
+                        })
+                    }
+                />
+            </Stack>
+        </>
+    );
 };
 
 export default Profile;
