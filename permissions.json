@@ -27,31 +27,31 @@
         "police": 7
     },
     "edit_report_contents": {
-        "police": 3
+        "police": 2
     },
     "edit_report_title": {
-        "police": 3
+        "police": 2
     },
     "add_criminal": {
-        "police": 3,
+        "police": 2,
         "lawyer": 3
     },
     "remove_criminal": {
-        "police": 3,
+        "police": 2,
         "lawyer": 3
     },
     "save_criminal": {
-        "police": 3,
+        "police": 2,
         "lawyer": 3
     },
     "add_officer_involved": {
-        "police": 3
+        "police": 2
     },
     "add_evidence": {
         "police": 2
     },
     "remove_officer_involved": {
-        "police": 3
+        "police": 2
     },
     "remove_evidence": {
         "police": 6
