@@ -26,7 +26,7 @@ ox_libs {
 
 shared_scripts {
     '@ox_lib/init.lua',
-    '@ox_core/lib/init.lua',
+    '@ox_core/lib/init.lua'
 }
 
 client_scripts {

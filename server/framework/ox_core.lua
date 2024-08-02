@@ -108,9 +108,11 @@ local ox = {}
 ---@param permissionName string
 ---@return boolean?
 function ox.isAuthorised(playerId, permission, permissionName)
+    if config.item and exports.ox_inventory:GetItemCount(playerId, config.item) == 0 then return false end
+
     local player = Ox.GetPlayer(playerId)
-    if not player or not player.charId then return false end
-    if player.getGroup('dispatch') then
+
+    if player?.getGroup('dispatch') then
         local grade = player.getGroup('dispatch')
         if type(permission) == 'table' then
             if not permission.dispatch then return false end
@@ -121,19 +123,12 @@ function ox.isAuthorised(playerId, permission, permissionName)
     end
 
     if type(permission) == 'table' then
-        for group, grade in pairs(permission) do
-            local playerGrade = player.getGroup(group)
-            if playerGrade and playerGrade >= grade then
-                return true
-            end
-        end
+        return player?.getGroup(permission) and true
     end
-    local groups = player?.getGroups(config.policeGroups)
-    for _, grade in pairs(groups) do
-        if grade >= permission then
-            return true
-        end
-    end
+
+    local _, grade = player?.getGroup(config.policeGroups)
+
+    return grade and grade >= permission
 end
 
 ---@return { label: string, plate: string }[]
@@ -532,9 +527,7 @@ registerCallback('ox_mdt:hireOfficer', function(source, stateId)
     local player = Ox.GetPlayerFromFilter({ stateId = stateId })
 
     if player then
-        for _, group in ipairs(config.policeGroups) do
-            if player.getGroup(group) then return false end
-        end
+        if player.getGroup(config.policeGroups) then return false end
 
         player.setGroup('police', 1)
         return true

@@ -27,9 +27,10 @@ local function getGradeLabel(group, grade)
     return ('%s %s'):format(getGroupLabel(group), getGroupGrades(group)?[grade])
 end
 
+local player = Ox.GetPlayer()
+
 function ox.getGroupInfo()
-    local player = Ox.GetPlayer()
-    if not player or not player.charId then return end
+    local groupName, grade = player.getGroup(config.policeGroups)
 
     for _, groupName in ipairs(config.policeGroups) do
         local grade = player.getGroup(groupName)
@@ -45,10 +46,9 @@ function ox.getGroupTitle(officer)
 end
 
 function ox.getOfficerData()
-    local player = Ox.GetPlayer()
-    if player then
+    if player and player.charId then
         local group, grade, title = ox.getGroupInfo()
-        localOfficer.stateId = player.stateId
+        localOfficer.stateId = player.get("stateId")
         localOfficer.firstName = player.get("firstName")
         localOfficer.lastName = player.get("lastName")
         localOfficer.group = group
@@ -58,6 +58,10 @@ function ox.getOfficerData()
 
     return localOfficer
 end
+
+AddEventHandler(ox.loadedEvent, function()
+    player = Ox.GetPlayer()
+end)
 
 ox.getGroupLabel = getGroupLabel
 ox.getGroupGrades = getGroupGrades
