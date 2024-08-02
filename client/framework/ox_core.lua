@@ -32,12 +32,9 @@ local player = Ox.GetPlayer()
 function ox.getGroupInfo()
     local groupName, grade = player.getGroup(config.policeGroups)
 
-    for _, groupName in ipairs(config.policeGroups) do
-        local grade = player.getGroup(groupName)
-        if grade then
-            return groupName, grade, getGradeLabel(groupName, grade)
-        end
-    end
+    if not groupName or not grade then return end
+
+    return groupName, grade, getGradeLabel(groupName, grade)
 end
 
 ---@param officer Officer
