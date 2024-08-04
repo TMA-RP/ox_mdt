@@ -451,7 +451,7 @@ function ox.getBOLOs(parameters)
         LEFT JOIN
             `characters` c
         ON
-            c.stateId = b.stateId
+            c.stateId = a.creator
         LEFT JOIN
             `ox_mdt_bolos_images` d
         ON

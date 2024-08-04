@@ -43,7 +43,7 @@ const BoloCard: React.ForwardRefRenderFunction<HTMLDivElement, Props> = ({ bolo 
         <Group h="100%">
           <Avatar variant="light" color="blue" src={getImage(bolo.image, bolo.mugshot)} />
           <Stack spacing={0} align="start">
-            <Text c="dark.0" size="md" weight={500}>{`${bolo.firstName} ${bolo.lastName} · ${bolo.callSign}`}</Text>
+            <Text c="dark.0" size="md" weight={500}>{`${bolo.firstName} ${bolo.lastName} · ${bolo.callSign ? bolo.callSign : ""}`}</Text>
             <Text c="dark.2" size="xs">
               {dayjs(bolo.createdAt).fromNow()}
             </Text>

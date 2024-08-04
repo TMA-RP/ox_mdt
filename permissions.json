@@ -8,10 +8,12 @@
         "lawyer": 2
     },
     "create_bolo": {
-        "lawyer": 3
+        "lawyer": 2,
+        "police": 4
     },
     "delete_bolo": {
-        "lawyer": 3
+        "lawyer": 2,
+        "police": 4
     },
     "change_profile_picture": {
         "police": 1
