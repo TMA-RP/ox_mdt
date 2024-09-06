@@ -87,7 +87,13 @@ AddEventHandler('ceeb_duty:changePlayerState', function(playerId, inDuty)
     if inDuty then
         addOfficer(playerId)
     else
-        officers.remove(playerId)
+        local officer = officers.get(playerId)
+
+        if officer then
+            local state = Player(playerId).state
+            units.removePlayerFromUnit(officer, state)
+            officers.remove(playerId)
+        end
     end
 end)
 
